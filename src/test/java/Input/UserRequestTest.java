@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class UserRequestTest {
 
-    private final static char INVALID_CURRENCY = '-';
+    public final static char INVALID_CURRENCY = '-';
     @Test
     public void testGetCurrencyType_It_is_the_set_currency_type() {
         UserRequest userRequest = new UserRequest('A', 3543);

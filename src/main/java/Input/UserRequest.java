@@ -11,7 +11,7 @@ public class UserRequest {
     private final int currencyValue;
 
     static {
-        Set<Character> tmp = new HashSet<Character>();
+        Set<Character> tmp = new HashSet<>();
         tmp.add('A');
         tmp.add('B');
 
