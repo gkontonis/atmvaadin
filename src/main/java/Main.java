@@ -1,12 +1,10 @@
+import Calculation.Calculator;
 import Input.UserInputReader;
 import Input.UserRequest;
 
 public class Main {
     private final static UserInputReader INPUT_READER = new UserInputReader();
-    Check check = new Check();
-    Rechnen calc = new Rechnen();
-    SplitInput splitter = new SplitInput();
-
+    private Calculator calc = new Calculator();
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -22,6 +20,7 @@ public class Main {
 
         System.out.println("Value: " + request.getCurrencyValue());
         System.out.println("Currency: " + request.getCurrencyType());
+        calc.calculate(request);
     }
 
 
