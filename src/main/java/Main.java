@@ -1,29 +1,27 @@
 import Input.UserInputReader;
+import Input.UserRequest;
 
 public class Main {
-    UserInputReader einlesen = new UserInputReader();
+    private final static UserInputReader INPUT_READER = new UserInputReader();
     Check check = new Check();
     Rechnen calc = new Rechnen();
     SplitInput splitter = new SplitInput();
 
+
     public static void main(String[] args) {
         Main main = new Main();
+        UserRequest request = INPUT_READER.getUserinput();
 
-        main.run();
+        main.run(request);
     }
 
-    private void run() {
-        String eingabe = einlesen.getUserinput();
-        while (!eingabe.equals("exit")) {
-            if (check.validate(eingabe)) {
-                calc.calculate(splitter.split(eingabe));
-            }
-            else {
-                System.out.println("FALSCHE EINHABE");
-            }
-            eingabe = einlesen.getUserinput();
+    private void run(UserRequest request) {
+        if(request == null){
+            throw new IllegalArgumentException("Request must not be null!");
         }
-        System.out.println("\n------Auf wiedersehen!------");
+
+        System.out.println("Value: " + request.getCurrencyValue());
+        System.out.println("Currency: " + request.getCurrencyType());
     }
 
 
