@@ -2,9 +2,9 @@ public class Main {
     Einlesen einlesen = new Einlesen();
     Check check = new Check();
     Rechnen calc = new Rechnen();
-    SplitEingabe splitEingabe = new SplitEingabe();
+    SplitInput splitter = new SplitInput();
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         Main main = new Main();
 
         main.run();
@@ -12,10 +12,16 @@ public class Main {
 
     private void run() {
         String eingabe = einlesen.getUserinput();
-        if(check.validate(eingabe)){
-
-            calc.calculate(splitEingabe.split(eingabe));
+        while (!eingabe.equals("exit")) {
+            if (check.validate(eingabe)) {
+                calc.calculate(splitter.split(eingabe));
+            }
+            else {
+                System.out.println("FALSCHE EINHABE");
+            }
+            eingabe = einlesen.getUserinput();
         }
+        System.out.println("\n------Auf wiedersehen!------");
     }
 
 

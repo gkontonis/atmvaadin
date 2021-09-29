@@ -1,6 +1,6 @@
 import javafx.util.Pair;
 
-public class SplitEingabe {
+public class SplitInput {
     public String[] split(String eingabe) {
         String[] pair = new String[2];
         pair[0] = eingabe.substring(0, eingabe.length()-1);
