@@ -1,5 +1,7 @@
+import Input.UserInputReader;
+
 public class Main {
-    Einlesen einlesen = new Einlesen();
+    UserInputReader einlesen = new UserInputReader();
     Check check = new Check();
     Rechnen calc = new Rechnen();
     SplitInput splitter = new SplitInput();
