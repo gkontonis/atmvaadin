@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MoneyBoxContainer {
-    private static MoneyBoxComperator moneyBoxComperator = new MoneyBoxComperator();
+    private static MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
     private Map<MoneyBox.Currency, List<MoneyBox>> container = new HashMap<>();
 
 
@@ -35,7 +35,7 @@ public class MoneyBoxContainer {
 
         }
 
-        result.sort(moneyBoxComperator);
+        result.sort(moneyBoxDecendingComperator);
 
         return result;
     }
