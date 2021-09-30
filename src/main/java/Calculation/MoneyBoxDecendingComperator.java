@@ -6,24 +6,26 @@ import java.util.function.ToDoubleFunction;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-public class MoneyBoxComperator implements Comparator<MoneyBox> {
+/**
+ * Comperator is used for sorting MoneyBoxes in Collections.
+ * It is designed to sort Notes before Coins and values from biggest to smallest (Decending)
+ */
+public class MoneyBoxDecendingComperator implements Comparator<MoneyBox> {
+
+    public static final int GREATER = 1;
+    public static final int EQUALS = 0;
+    public static final int SMALLER = -1;
 
     @Override
     public int compare(MoneyBox o1, MoneyBox o2) {
-        //TODO: Doenst sort right, fix
-        int valueResult = o2.getValue() - o1.getValue();
-
-        if(valueResult==0){
-            if(o1.getType()==o2.getType()){
-                return 0;
-            }
-            if(o1.getType()== MoneyBox.CurrencyType.NOTE){
-                return -1;
-            }
-            return 1;
+        if (o1.getType() == MoneyBox.CurrencyType.NOTE && o2.getType() == MoneyBox.CurrencyType.COIN) {
+            return SMALLER;
         }
 
-        return valueResult;
+        if (o1.getType() == MoneyBox.CurrencyType.COIN && o2.getType() == MoneyBox.CurrencyType.NOTE) {
+            return GREATER;
+        }
+        return  o2.getValue()-o1.getValue();
     }
 
     @Override
