@@ -1,26 +1,33 @@
 import Calculation.Calculator;
 import Input.UserInputReader;
 import Input.UserRequest;
+import Output.Output;
 
 public class Main {
-    private final static UserInputReader INPUT_READER = new UserInputReader();
+    private final UserInputReader INPUT_READER = new UserInputReader();
     private Calculator calc = new Calculator();
+    private Output output = new Output();
 
     public static void main(String[] args) {
         Main main = new Main();
-        UserRequest request = INPUT_READER.getUserinput();
-
-        main.run(request);
+        main.run();
     }
 
-    private void run(UserRequest request) {
-        if(request == null){
-            throw new IllegalArgumentException("Request must not be null!");
-        }
+    private void run() {
 
-        System.out.println("Value: " + request.getCurrencyValue());
-        System.out.println("Currency: " + request.getCurrencyType());
-        calc.calculate(request);
+        UserRequest request = INPUT_READER.getUserinput();
+
+        while(request != null) {
+            //if (request == null) {
+            //    throw new IllegalArgumentException("Request must not be null!");
+            //}
+
+            //System.out.println("Value: " + request.getCurrencyValue());
+            //System.out.println("Currency: " + request.getCurrencyType());
+
+            output.printOutput(calc.calculate(request));
+            request = INPUT_READER.getUserinput();
+        }
     }
 
 
