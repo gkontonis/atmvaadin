@@ -12,19 +12,19 @@ public class Output {
         MoneyBox.CurrencyType currencyType = null;
 
         for (int i = 0; i < results.size(); i++) {
-            CalculationResult currentCalculationresult = results.get(i);
+            CalculationResult currentCalculationResult = results.get(i);
 
             if (currencyType == null) {
-                output += currentCalculationresult.getBox().getType() == MoneyBox.CurrencyType.NOTE ? "S " : "M ";
-                currencyType = currentCalculationresult.getBox().getType();
+                output += currentCalculationResult.getBox().getType() == MoneyBox.CurrencyType.NOTE ? "S " : "M ";
+                currencyType = currentCalculationResult.getBox().getType();
             }
 
-            if (currencyType == MoneyBox.CurrencyType.NOTE && currentCalculationresult.getBox().getType() == MoneyBox.CurrencyType.COIN) {
+            if (currencyType == MoneyBox.CurrencyType.NOTE && currentCalculationResult.getBox().getType() == MoneyBox.CurrencyType.COIN) {
                 output += "M ";
-                currencyType = currentCalculationresult.getBox().getType();
+                currencyType = currentCalculationResult.getBox().getType();
             }
 
-            output += currentCalculationresult.getBox().getValue() + " " + currentCalculationresult.getAmount() + " ";
+            output += currentCalculationResult.getBox().getValue() + " " + currentCalculationResult.getAmount() + " ";
         }
         System.out.println(output);
     }

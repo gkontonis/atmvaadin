@@ -35,19 +35,18 @@ public class Calculator {
             throw new IllegalArgumentException("Request must not be null!");
         }
 
-
         MoneyBox.Currency currency = get(request.getCurrencyType());
         List<MoneyBox> boxes =  container.get(currency);
-        int number = request.getCurrencyValue();
+        int userRequestValue = request.getCurrencyValue();
 
         List<CalculationResult> result = new ArrayList<>();
 
         for(MoneyBox box : boxes){
-            int amount = number / box.getValue();
+            int amount = userRequestValue / box.getValue();
             if(amount == 0){
                 continue;
             }
-            number = number % box.getValue();
+            userRequestValue = userRequestValue % box.getValue();
             //System.out.println("DEBUG: " + box.getValue() + " " + box.getType().toString() + " " +  amount);
             result.add(new CalculationResult(amount, box, currency));
         }

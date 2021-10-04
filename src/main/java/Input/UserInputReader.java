@@ -22,7 +22,7 @@ public class UserInputReader {
 
             request = convert(input);
 
-            if (request == null) {
+            if (request == null || request.getCurrencyValue() > 10000000) {
                 System.out.println("FALSCHE EINGABE");
                 continue;
             }
