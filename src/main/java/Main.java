@@ -1,10 +1,10 @@
 import backend.calculator.Calculator;
-import input.UserInputReader;
-import input.dto.UserRequest;
+import input.reader.PayoutInputReader;
+import input.dto.PayoutRequest;
 import output.Output;
 
 public class Main {
-    private final UserInputReader INPUT_READER = new UserInputReader();
+    private final PayoutInputReader INPUT_READER = new PayoutInputReader();
     private Calculator calc = new Calculator();
     private Output output = new Output();
 
@@ -15,7 +15,7 @@ public class Main {
 
     private void run() {
 
-        UserRequest request = INPUT_READER.getUserinput();
+        PayoutRequest request = INPUT_READER.getUserinput();
 
         while(request != null) {
             output.printOutput(calc.calculate(request));

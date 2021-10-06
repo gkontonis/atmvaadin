@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserRequest {
+public class PayoutRequest {
     public static final Set<Character> POSSIBLE_CURRENCIES;
 
     private final char currencyType;
@@ -26,7 +26,7 @@ public class UserRequest {
         return currencyValue >= 0;
     }
 
-    public UserRequest(char currencyType, int currencyValue) {
+    public PayoutRequest(char currencyType, int currencyValue) {
         validateCurrencyType(currencyType);
         validateCurrencyValue(currencyValue);
 

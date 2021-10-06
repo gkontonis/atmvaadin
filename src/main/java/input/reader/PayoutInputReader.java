@@ -1,19 +1,19 @@
-package input;
+package input.reader;
 
-import input.dto.UserRequest;
+import input.dto.PayoutRequest;
 
 import java.util.Scanner;
 
-public class UserInputReader {
+public class PayoutInputReader {
 
     public static final int ASCII_OFFSET = 48;
 
-    public UserRequest getUserinput() {
+    public PayoutRequest getUserinput() {
         Scanner sc = new Scanner(System.in);
 
         boolean isUserInput = true;
 
-        UserRequest request = null;
+        PayoutRequest request = null;
 
         do {
             System.out.print("Bitte ganzzahligen Betrag & Währung A/B eingeben (z.B. 1234A) |'exit' zum abbrechen: ");
@@ -35,7 +35,7 @@ public class UserInputReader {
         return request;
     }
 
-    public UserRequest convert(String input) {
+    public PayoutRequest convert(String input) {
         if (input == null) {
             return null;
         }
@@ -65,7 +65,7 @@ public class UserInputReader {
                 continue;
             }
 
-            if (!UserRequest.isCurrencyTypeValid(currentSign)) {
+            if (!PayoutRequest.isCurrencyTypeValid(currentSign)) {
                 return null;
             }
             currencyTypePart = currentSign;
@@ -76,7 +76,7 @@ public class UserInputReader {
             return null;
         }
 
-        return new UserRequest(currencyTypePart, numberPart);
+        return new PayoutRequest(currencyTypePart, numberPart);
     }
 
     private int toNumber(char digit) {

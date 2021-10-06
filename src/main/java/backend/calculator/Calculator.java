@@ -2,7 +2,7 @@ package backend.calculator;
 
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.UserRequest;
+import input.dto.PayoutRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Calculator {
         container.add(new MoneyBox(400, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
     }
 
-    public List<CalculationResult> calculate(UserRequest request) {
+    public List<CalculationResult> calculate(PayoutRequest request) {
         if(request == null){
             throw new IllegalArgumentException("Request must not be null!");
         }

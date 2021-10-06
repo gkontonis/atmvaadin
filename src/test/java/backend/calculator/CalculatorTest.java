@@ -2,7 +2,7 @@ package backend.calculator;
 
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.UserRequest;
+import input.dto.PayoutRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -25,8 +25,8 @@ public class CalculatorTest {
     @Test
     public void testCalculate_It_is_same_currency_as_UserRequestCurrency() {
         Calculator calculator = new Calculator();
-        UserRequest userRequest = new UserRequest('A', 1);
-        List<CalculationResult> results = calculator.calculate(userRequest);
+        PayoutRequest payoutRequest = new PayoutRequest('A', 1);
+        List<CalculationResult> results = calculator.calculate(payoutRequest);
         CalculationResult calculationResult = results.get(0);
 
         Assert.assertEquals(calculationResult.getCurrency(), MoneyBox.Currency.A);
@@ -35,9 +35,9 @@ public class CalculatorTest {
     @Test
     public void testCalculate_It_is_same_currencyResult_as_MoneyBox_values() {
         Calculator calculator = new Calculator();
-        UserRequest userRequest = new UserRequest('A', getCurrencyTotalBaseAmount(MoneyBox.Currency.A));
+        PayoutRequest payoutRequest = new PayoutRequest('A', getCurrencyTotalBaseAmount(MoneyBox.Currency.A));
         List<CalculationResult> expectedResult = getCurrencyTotalBaseResult(MoneyBox.Currency.A);
-        List<CalculationResult> realResult = calculator.calculate(userRequest);
+        List<CalculationResult> realResult = calculator.calculate(payoutRequest);
 
         assertCalculationResults(realResult, expectedResult);
     }
