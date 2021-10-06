@@ -18,13 +18,6 @@ public class Main {
         UserRequest request = INPUT_READER.getUserinput();
 
         while(request != null) {
-            //if (request == null) {
-            //    throw new IllegalArgumentException("Request must not be null!");
-            //}
-
-            //System.out.println("Value: " + request.getCurrencyValue());
-            //System.out.println("Currency: " + request.getCurrencyType());
-
             output.printOutput(calc.calculate(request));
             request = INPUT_READER.getUserinput();
         }
