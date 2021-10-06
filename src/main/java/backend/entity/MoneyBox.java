@@ -28,17 +28,31 @@ public class MoneyBox {
     public MoneyBox(int value, Currency currency, CurrencyType type, int initialAmount) {
         this(value, currency, type);
 
-        throw new IllegalStateException("Not yet implemented!");
+        validateAmount(initialAmount);
+
+        amount = initialAmount;
     }
 
     public int deposit(int amount){
+        validateAmountDeposition(amount);
 
-        throw new IllegalStateException("Not yet implemented!");
+        this.amount += amount;
+        return this.amount;
     }
 
     public int payout(int amount){
 
-        throw new IllegalStateException("Not yet implemented!");
+        validateAmount(amount);
+
+        if(this.amount-amount < 0){
+            amount = this.amount;
+            this.amount = 0;
+            return amount;
+        }
+
+        this.amount -= amount;
+
+        return this.amount;
     }
 
 
@@ -78,4 +92,19 @@ public class MoneyBox {
         throw new IllegalArgumentException("Value " + value + " is not 1, 2, multiple of five or multiple of ten");
 
     }
+
+    private void validateAmount(int amount){
+        if(amount < 0){
+            throw new IllegalArgumentException("Amount must not be smaller than zero!");
+        }
+    }
+
+    private void validateAmountDeposition(int amount){
+        validateAmount(amount);
+        if(this.amount + amount < this.amount){
+            throw new IllegalArgumentException("Cannot add " + amount + " pieces. Only possible: " + (Integer.MAX_VALUE - this.amount));
+        }
+    }
+
+
 }
