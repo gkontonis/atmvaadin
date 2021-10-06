@@ -2,6 +2,7 @@ package backend.calculator;
 
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
+import input.dto.DepositRequest;
 import input.dto.PayoutRequest;
 
 import java.util.ArrayList;
@@ -55,6 +56,10 @@ public class Calculator {
 
         return result;
 
+    }
+
+    public void deposit(DepositRequest depositRequest){
+        container.deposit(depositRequest.getMoneyBoxContainer());
     }
 
     private MoneyBox.Currency get(char c) {

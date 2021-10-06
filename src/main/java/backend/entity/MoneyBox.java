@@ -8,6 +8,7 @@ public class MoneyBox {
     private int value;
     private Currency currency;
     private CurrencyType type;
+    private int amount = 0;
 
     public MoneyBox(int value, Currency currency, CurrencyType type) {
         validateValue(value);
@@ -24,6 +25,23 @@ public class MoneyBox {
         this.type = type;
     }
 
+    public MoneyBox(int value, Currency currency, CurrencyType type, int initialAmount) {
+        this(value, currency, type);
+
+        throw new IllegalStateException("Not yet implemented!");
+    }
+
+    public int deposit(int amount){
+
+        throw new IllegalStateException("Not yet implemented!");
+    }
+
+    public int payout(int amount){
+
+        throw new IllegalStateException("Not yet implemented!");
+    }
+
+
     public int getValue() {
         return value;
     }
@@ -35,6 +53,8 @@ public class MoneyBox {
     public CurrencyType getType() {
         return type;
     }
+
+    public int getAmount() { return amount; }
 
     private void validateValue(int value) {
         if (value == 0) {
@@ -49,10 +69,10 @@ public class MoneyBox {
         if (value == 2) {
             return;
         }
-        if(value%5 == 0){
+        if (value % 5 == 0) {
             return;
         }
-        if(value%10 == 0){
+        if (value % 10 == 0) {
             return;
         }
         throw new IllegalArgumentException("Value " + value + " is not 1, 2, multiple of five or multiple of ten");

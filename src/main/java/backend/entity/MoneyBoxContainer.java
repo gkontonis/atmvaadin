@@ -41,4 +41,8 @@ public class MoneyBoxContainer {
 
         return result;
     }
+
+    public void deposit(MoneyBoxContainer container){
+        throw new IllegalStateException("Not yet implemented");
+    }
 }
