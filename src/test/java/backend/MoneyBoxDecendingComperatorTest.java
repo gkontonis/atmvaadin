@@ -1,5 +1,7 @@
-package Calculation;
+package backend;
 
+import backend.comperator.MoneyBoxDecendingComperator;
+import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

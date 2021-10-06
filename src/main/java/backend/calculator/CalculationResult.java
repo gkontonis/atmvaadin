@@ -1,4 +1,7 @@
-package Calculation;
+package backend.calculator;
+
+import backend.Calculator;
+import backend.entity.MoneyBox;
 
 public class CalculationResult {
     private int amount;

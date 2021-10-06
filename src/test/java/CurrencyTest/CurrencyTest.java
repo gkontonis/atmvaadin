@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
+//TODO: Merge with UserInputReaderTest
+
 @Test
 public class CurrencyTest {
     // A - Side

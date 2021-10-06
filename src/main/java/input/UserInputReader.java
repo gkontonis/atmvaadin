@@ -1,4 +1,6 @@
-package Input;
+package input;
+
+import input.dto.UserRequest;
 
 import java.util.Scanner;
 

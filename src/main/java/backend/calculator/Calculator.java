@@ -1,6 +1,8 @@
-package Calculation;
+package backend.calculator;
 
-import Input.UserRequest;
+import backend.entity.MoneyBox;
+import backend.entity.MoneyBoxContainer;
+import input.dto.UserRequest;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package Calculation;
+package backend.comperator;
+
+import backend.entity.MoneyBox;
 
 import java.util.Comparator;
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package Input;
+package input.dto;
 
 import java.util.Collections;
 import java.util.HashSet;

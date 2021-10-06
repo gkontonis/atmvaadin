@@ -1,9 +1,8 @@
-package Calculation;
+package backend.calculator;
 
+import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 public class CalculationResultTest {
 

@@ -1,7 +1,7 @@
-package Output;
+package output;
 
-import Calculation.CalculationResult;
-import Calculation.MoneyBox;
+import backend.calculator.CalculationResult;
+import backend.entity.MoneyBox;
 
 import java.util.List;
 

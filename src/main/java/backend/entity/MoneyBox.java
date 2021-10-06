@@ -1,4 +1,4 @@
-package Calculation;
+package backend.entity;
 
 public class MoneyBox {
     public enum Currency {A, B}

@@ -1,7 +1,7 @@
-import Calculation.Calculator;
-import Input.UserInputReader;
-import Input.UserRequest;
-import Output.Output;
+import backend.calculator.Calculator;
+import input.UserInputReader;
+import input.dto.UserRequest;
+import output.Output;
 
 public class Main {
     private final UserInputReader INPUT_READER = new UserInputReader();

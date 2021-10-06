@@ -1,9 +1,8 @@
-package Input;
+package input;
 
+import input.dto.UserRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 public class UserInputReaderTest {
 

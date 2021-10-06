@@ -1,12 +1,12 @@
-package Calculation;
+package backend.calculator.entity;
 
+import backend.entity.MoneyBox;
+import backend.entity.MoneyBoxContainer;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.testng.Assert.*;
 
 public class MoneyBoxContainerTest {
     @Test(expectedExceptions = IllegalArgumentException.class)

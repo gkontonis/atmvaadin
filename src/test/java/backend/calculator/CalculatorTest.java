@@ -1,14 +1,13 @@
-package Calculation;
+package backend.calculator;
 
-import Input.UserRequest;
+import backend.entity.MoneyBox;
+import backend.entity.MoneyBoxContainer;
+import input.dto.UserRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
-
-import static org.testng.Assert.*;
 
 public class CalculatorTest {
 
