@@ -20,6 +20,15 @@ public class MoneyBoxDecendingComperator implements Comparator<MoneyBox> {
 
     @Override
     public int compare(MoneyBox o1, MoneyBox o2) {
+      // if (o1.getType() == MoneyBox.CurrencyType.NOTE && o2.getType() == MoneyBox.CurrencyType.COIN) {
+      //     return GREATER;
+      // }
+
+      // if (o1.getType() == MoneyBox.CurrencyType.COIN && o2.getType() == MoneyBox.CurrencyType.NOTE) {
+      //     return SMALLER;
+      // }
+      // return normResult(o1.getValue() - o2.getValue());
+
         if (o1.getType() == MoneyBox.CurrencyType.NOTE && o2.getType() == MoneyBox.CurrencyType.COIN) {
             return SMALLER;
         }
@@ -27,7 +36,15 @@ public class MoneyBoxDecendingComperator implements Comparator<MoneyBox> {
         if (o1.getType() == MoneyBox.CurrencyType.COIN && o2.getType() == MoneyBox.CurrencyType.NOTE) {
             return GREATER;
         }
-        return  o2.getValue()-o1.getValue();
+        return normResult(o1.getValue() - o2.getValue());
+
+    }
+
+    private int normResult(int comparison) {
+        if (comparison == 0) {
+            return EQUALS;
+        }
+        return comparison < 0 ? GREATER : SMALLER;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package backend;
+package backend.comperator;
 
 import backend.comperator.MoneyBoxDecendingComperator;
 import backend.entity.MoneyBox;
@@ -23,7 +23,7 @@ public class MoneyBoxDecendingComperatorTest {
     @Test
     public void testCompare_It_returns_1_when_first_value_greater_second_value() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box1 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
         MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2),  MoneyBoxDecendingComperator.SMALLER);
     }
@@ -32,7 +32,7 @@ public class MoneyBoxDecendingComperatorTest {
     public void testCompare_It_returns_negative1_when_first_value_smaller_second_value() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
         MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2),  MoneyBoxDecendingComperator.GREATER);
     }
 
@@ -44,7 +44,7 @@ public class MoneyBoxDecendingComperatorTest {
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2), MoneyBoxDecendingComperator.SMALLER);
     }
     @Test
-    public void testCompare_It_returns_negative1_when_first_and_second_value_are_same_and_first_type_is_note() {
+    public void testCompare_It_returns_negative1_when_first_and_second_value_are_same_and_first_type_is_coin() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
         MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
         MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
@@ -53,10 +53,10 @@ public class MoneyBoxDecendingComperatorTest {
 
     @Test
     public void testCompare_It_sorts_a_list_with_notes_before_coins_and_bigges_value_first(){
-        MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box3 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
-        MoneyBox box4 = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
+        MoneyBox box1 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box3 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
+        MoneyBox box4 = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
         List<MoneyBox> boxes = new ArrayList<>(4);
         boxes.add(box1);
         boxes.add(box2);
@@ -67,8 +67,8 @@ public class MoneyBoxDecendingComperatorTest {
         List<MoneyBox> expectedBoxes = new ArrayList<>(4);
         expectedBoxes.add(box4);
         expectedBoxes.add(box3);
-        expectedBoxes.add(box2);
         expectedBoxes.add(box1);
+        expectedBoxes.add(box2);
 
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
         boxes.sort(moneyBoxDecendingComperator);
