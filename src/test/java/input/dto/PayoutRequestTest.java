@@ -1,4 +1,4 @@
-package input;
+package input.dto;
 
 import input.dto.PayoutRequest;
 import org.testng.Assert;
@@ -14,7 +14,7 @@ public class PayoutRequestTest {
     }
 
     @Test
-    public void testGetCurrencyType_It_doesnt_thorw_exception_when_currencytype_is_defined_in_Possible_currencies() {
+    public void testGetCurrencyType_It_doesnt_throw_exception_when_currencytype_is_defined_in_Possible_currencies() {
         PayoutRequest payoutRequest = new PayoutRequest('A', 3543);
         Assert.assertNotNull(payoutRequest);
     }

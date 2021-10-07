@@ -1,7 +1,7 @@
-package input;
+package input.reader;
 
+import input.dto.PayoutRequestTest;
 import input.dto.PayoutRequest;
-import input.reader.PayoutInputReader;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

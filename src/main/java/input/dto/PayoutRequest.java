@@ -53,6 +53,6 @@ public class PayoutRequest {
         if (isCurrencyTypeValid(currencyType)) {
             return;
         }
-        throw new IllegalArgumentException("Currency Type '" + currencyType + "' is not defined ad valid Currency Type");
+        throw new IllegalArgumentException("Currency Type '" + currencyType + "' is not defined as valid Currency Type");
     }
 }
