@@ -70,6 +70,10 @@ public class MoneyBox {
 
     public int getAmount() { return amount; }
 
+    public void setAmount(int amount){
+        this.amount = amount;
+    }
+
     private void validateValue(int value) {
         if (value == 0) {
             throw new IllegalArgumentException("Type must not be 0!");

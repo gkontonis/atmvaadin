@@ -2,6 +2,7 @@ package backend.calculator;
 
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
+import input.dto.DepositRequest;
 import input.dto.PayoutRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,10 +12,27 @@ import java.util.List;
 
 public class CalculatorTest {
 
+    @Test
+    public void testCalculator_It_is_valid_when_MoneyBoxContainer_was_passed() {
+        Assert.assertNotNull(new Calculator(new MoneyBoxContainer()));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCalculator_It_throws_exception_when_passed_MoneyBoxContainer_is_null() {
+        new Calculator(null);
+    }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testCalculate_It_is_not_valid_when_UserRequest_null() {
         Calculator calculator = new Calculator();
-        calculator.calculate(null);
+        calculator.calculatePayoutRequest(null);
+    }
+
+    @Test
+    public void testCalculator_It_is_MoneyBoxContainer_when_MoneyBoxContainer_was_passed() {
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        Calculator calculator = new Calculator(moneyBoxContainer);
+        Assert.assertSame(calculator.getContainer(), moneyBoxContainer);
     }
 
     //@Test
@@ -26,7 +44,7 @@ public class CalculatorTest {
     public void testCalculate_It_is_same_currency_as_UserRequestCurrency() {
         Calculator calculator = new Calculator();
         PayoutRequest payoutRequest = new PayoutRequest('A', 1);
-        List<CalculationResult> results = calculator.calculate(payoutRequest);
+        List<CalculationResult> results = calculator.calculatePayoutRequest(payoutRequest);
         CalculationResult calculationResult = results.get(0);
 
         Assert.assertEquals(calculationResult.getCurrency(), MoneyBox.Currency.A);
@@ -37,11 +55,30 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
         PayoutRequest payoutRequest = new PayoutRequest('A', getCurrencyTotalBaseAmount(MoneyBox.Currency.A));
         List<CalculationResult> expectedResult = getCurrencyTotalBaseResult(MoneyBox.Currency.A);
-        List<CalculationResult> realResult = calculator.calculate(payoutRequest);
+        List<CalculationResult> realResult = calculator.calculatePayoutRequest(payoutRequest);
 
         assertCalculationResults(realResult, expectedResult);
     }
 
+    //---------------------------------------------------------------------------------------------------------------
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDeposit_It_is_Invalid_when_deposit_is_null() {
+        Calculator calculator = new Calculator();
+        DepositRequest depositRequest = null;
+        calculator.deposit(depositRequest);
+        Assert.assertNotNull(depositRequest);
+    }
+
+   // @Test not working my test test?
+   // public void testDeposit_It_is_valid_when_depositRequest_is_same_as_deposit_request() {
+   //     Calculator calculator = new Calculator();
+   //     DepositRequest depositRequest = new DepositRequest();
+   //     calculator.deposit(depositRequest);
+   // }
+
+
+    //---------------------------------------------------------------------------------------------------------------
 
     private int getCurrencyTotalBaseAmount(MoneyBox.Currency currency) {
         MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
@@ -102,12 +139,12 @@ public class CalculatorTest {
                 throw new AssertionError("Lists differ at element: " + i + ", expected currency: " + e.getCurrency() + ", actual currency: " + a.getCurrency());
             }
 
-            if(a.getBox().getValue() != e.getBox().getValue()){
+            if (a.getBox().getValue() != e.getBox().getValue()) {
                 throw new AssertionError("Lists differ at element: " + i + ", expected value: " + e.getBox().getValue() + ", actual value: " + a.getBox().getValue());
 
             }
 
-            if(a.getBox().getType() != e.getBox().getType()){
+            if (a.getBox().getType() != e.getBox().getType()) {
                 throw new AssertionError("Lists differ at element: " + i + ", expected type: " + e.getBox().getType() + ", actual type: " + a.getBox().getType());
 
             }

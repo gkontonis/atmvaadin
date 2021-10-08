@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private MoneyBoxContainer container = new MoneyBoxContainer();
+    private static MoneyBoxContainer container = new MoneyBoxContainer();
 
     public Calculator() {
         this.container = container;
@@ -33,43 +33,73 @@ public class Calculator {
         container.add(new MoneyBox(400, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
     }
 
-    public List<CalculationResult> calculate(PayoutRequest request) {
-        if(request == null){
-            throw new IllegalArgumentException("Request must not be null!");
+
+
+
+    public Calculator(MoneyBoxContainer moneyBoxContainer) {
+        if (moneyBoxContainer == null) {
+            throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
         }
 
-        MoneyBox.Currency currency = get(request.getCurrencyType());
-        List<MoneyBox> boxes =  container.get(currency);
-        int userRequestValue = request.getCurrencyValue();
+        container = moneyBoxContainer;
+    }
+
+    //TODO List of all MoneyBoxes and GetTypeMethod should probably be somewhere else
+    public MoneyBox.CurrencyType getType(int value, char currencyChar) {
+        MoneyBox.Currency currency = getCurrency(currencyChar);
+        for (MoneyBox mb : container.get(currency)) {
+            if (mb.getValue() == value) {
+                return mb.getType();
+            }
+        }
+        return null;
+    }
+
+    public List<CalculationResult> calculatePayoutRequest(PayoutRequest payoutRequest) {
+        if (payoutRequest == null) {
+            throw new IllegalArgumentException("Payout Request must not be null!");
+        }
+
+        MoneyBox.Currency currency = getCurrency(payoutRequest.getCurrencyType());
+        List<MoneyBox> boxes = container.get(currency);
+        int userRequestValue = payoutRequest.getCurrencyValue();
 
         List<CalculationResult> result = new ArrayList<>();
 
-        for(MoneyBox box : boxes){
+        for (MoneyBox box : boxes) {
             int amount = userRequestValue / box.getValue();
-            if(amount == 0){
+            if (amount == 0) {
                 continue;
             }
             userRequestValue = userRequestValue % box.getValue();
             //System.out.println("DEBUG: " + box.getValue() + " " + box.getType().toString() + " " +  amount);
             result.add(new CalculationResult(amount, box, currency));
         }
-
         return result;
-
     }
 
-    public void deposit(DepositRequest depositRequest){
+    public void deposit(DepositRequest depositRequest) {
+        if (depositRequest == null) {
+            throw new IllegalArgumentException("Deposit Request must not be null!");
+
+        }
         container.deposit(depositRequest.getMoneyBoxContainer());
+
+        throw new IllegalArgumentException("Create Specefication");
     }
 
-    private MoneyBox.Currency get(char c) {
+    public MoneyBox.Currency getCurrency(char c) {
         switch (c) {
             case 'A':
                 return MoneyBox.Currency.A;
-            case 'B' :
+            case 'B':
                 return MoneyBox.Currency.B;
             default:
-                throw new IllegalArgumentException("Couldnt find currency " + c );
+                throw new IllegalArgumentException("Couldnt find currency " + c);
         }
+    }
+
+    public MoneyBoxContainer getContainer() {
+        return container;
     }
 }
