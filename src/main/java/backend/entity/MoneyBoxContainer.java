@@ -12,7 +12,7 @@ public class MoneyBoxContainer {
     private Map<MoneyBox.Currency, List<MoneyBox>> container = new HashMap<>();
 
 
-    public List<MoneyBox> add(MoneyBox box) {
+    public List<MoneyBox> put(MoneyBox box) {
 
         if (box == null) {
             throw new IllegalArgumentException("Passed Box must not be null!");
@@ -23,8 +23,14 @@ public class MoneyBoxContainer {
             container.put(box.getCurrency(), boxes);
         }
 
+        for (MoneyBox moneyBox : boxes) {
+            if (moneyBox.getValue() == box.getValue() && moneyBox.getType() == box.getType()) {
+                // mb.setAmount(mb.getAmount() + box.getAmount());
+                moneyBox = box;
+                return boxes;
+            }
+        }
         boxes.add(box);
-
         return boxes;
     }
 
@@ -50,7 +56,7 @@ public class MoneyBoxContainer {
         return container.isEmpty();
     }
 
-    public List<MoneyBox> addCombineDuplicates(MoneyBox moneyBox) {
+    public void deposit(MoneyBox moneyBox) {
         if (moneyBox == null) {
             throw new IllegalArgumentException("Passed Box must not be null!");
         }
@@ -64,12 +70,10 @@ public class MoneyBoxContainer {
         for (MoneyBox mb : container.get(moneyBox.getCurrency())) {
             if (mb.getValue() == moneyBox.getValue() && mb.getType() == moneyBox.getType()) {
                 mb.setAmount(mb.getAmount() + moneyBox.getAmount());
-                return boxes;
+                return;
             }
         }
         boxes.add(moneyBox);
-
-        return boxes;
     }
 
 }
