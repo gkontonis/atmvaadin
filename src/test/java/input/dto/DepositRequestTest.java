@@ -45,6 +45,7 @@ public class DepositRequestTest {
         depositRequest.addMoneyBox(new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
     }
 
+    /*
     @Test
     public void testContains_It_is_false_when_MoneyBoxes_null(){
         DepositRequest depositRequest = new DepositRequest();
@@ -67,6 +68,6 @@ public class DepositRequestTest {
         depositRequest.addMoneyBox(new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
 
         Assert.assertFalse(depositRequest.contains(moneyBox));
-    }
+    }*/
 
 }
