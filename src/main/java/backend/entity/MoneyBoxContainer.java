@@ -35,21 +35,28 @@ public class MoneyBoxContainer {
     }
 
     public List<MoneyBox> get(MoneyBox.Currency currency) {
-
         List<MoneyBox> result = container.get(currency);
-
         if (result == null) {
             throw new IllegalArgumentException("Passed Currency " + currency + " was not found");
         }
-
         result.sort(moneyBoxDecendingComperator);
-
         return result;
     }
 
-    //TODO: Specification and Implementation
-    public void deposit(MoneyBoxContainer container) {
-        throw new IllegalStateException("Not yet implemented");
+    public Map<MoneyBox.Currency, List<MoneyBox>> getMap() {
+        return container;
+    }
+
+    public void depositContainer(MoneyBoxContainer source) {
+        if(source == null){
+            throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
+        }
+
+        for (MoneyBox.Currency currency : source.getMap().keySet()) {
+            for (MoneyBox box : source.getMap().get(currency)) {
+                this.deposit(box);
+            }
+        }
     }
 
     public boolean isEmpty() {
@@ -67,9 +74,9 @@ public class MoneyBoxContainer {
         }
 
         //TODO Able to do better / more beaufiul code
-        for (MoneyBox mb : container.get(moneyBox.getCurrency())) {
-            if (mb.getValue() == moneyBox.getValue() && mb.getType() == moneyBox.getType()) {
-                mb.setAmount(mb.getAmount() + moneyBox.getAmount());
+        for (MoneyBox box : container.get(moneyBox.getCurrency())) {
+            if (box.getValue() == moneyBox.getValue() && box.getType() == moneyBox.getType()) {
+                box.setAmount(box.getAmount() + moneyBox.getAmount());
                 return;
             }
         }

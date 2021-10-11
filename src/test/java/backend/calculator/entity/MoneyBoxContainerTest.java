@@ -61,35 +61,68 @@ public class MoneyBoxContainerTest {
         Assert.assertEquals(result, expectedList);
     }
 
-    @Test
-    public void testDeposit_It_throws_exception_when_container_is_null() {
-
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDepositContainer_It_throws_exception_when_container_is_null() {
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBoxContainer moneyBoxContainer2 = null;
+        moneyBoxContainer.depositContainer(moneyBoxContainer2);
     }
 
+    @Test
+    public void testDepositMoneyBoxContainer_Amounts_get_increased_if_moneybox_of_same_currency_and_value_already_exists() {
+        MoneyBoxContainer existingMoneyBoxContainer = new MoneyBoxContainer();
+        MoneyBoxContainer newMoneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox existingMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
+        MoneyBox newMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        existingMoneyBoxContainer.put(existingMoneyBox);
+        newMoneyBoxContainer.put(newMoneyBox);
+
+        existingMoneyBoxContainer.depositContainer(newMoneyBoxContainer);
+
+        Assert.assertEquals(existingMoneyBoxContainer.get(MoneyBox.Currency.A).get(0).getAmount(), 3);
+    }
+
+    @Test
+    public void testDepositMoneyBoxContainer_It_adds_new_moneybox_if_moneybox_is_unregistred() {
+        MoneyBoxContainer existingMoneyBoxContainer = new MoneyBoxContainer();
+        MoneyBoxContainer newMoneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox newMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        newMoneyBoxContainer.put(newMoneyBox);
+
+        existingMoneyBoxContainer.depositContainer(newMoneyBoxContainer);
+
+        Assert.assertNotNull(existingMoneyBoxContainer.get(MoneyBox.Currency.A));
+    }
+    //-----------------------------------------
+
+
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeposit_It_throws_exception_when_moneybox_is_null() {
+    public void testDepositMoneyBox_It_throws_exception_when_moneybox_is_null() {
         MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
         MoneyBox moneyBox = null;
         moneyBoxContainer.deposit(moneyBox);
     }
 
     @Test
-    public void testDeposit_Amounts_get_increased_if_moneybox_of_same_currency_and_value_already_exists() {
+    public void testDepositMoneyBox_Amounts_get_increased_if_moneybox_of_same_currency_and_value_already_exists() {
         MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
         MoneyBox existingMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
         MoneyBox newMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
         moneyBoxContainer.put(existingMoneyBox);
         moneyBoxContainer.deposit(newMoneyBox);
 
-        Assert.assertEquals(moneyBoxContainer.get(MoneyBox.Currency.A).get(0).getAmount(),3);
+        Assert.assertEquals(moneyBoxContainer.get(MoneyBox.Currency.A).get(0).getAmount(), 3);
     }
 
     @Test
-    public void testDeposit_It_adds_new_moneybox_if_moneybox_is_unregistred() {
+    public void testDepositMoneyBox_It_adds_new_moneybox_if_moneybox_is_unregistred() {
         MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
         MoneyBox newMoneyBox = new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
         moneyBoxContainer.deposit(newMoneyBox);
 
         Assert.assertNotNull(moneyBoxContainer.get(MoneyBox.Currency.A));
     }
+    //-----------------------------------------
+
+
 }
