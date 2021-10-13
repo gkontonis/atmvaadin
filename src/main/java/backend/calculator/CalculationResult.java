@@ -7,6 +7,7 @@ public class CalculationResult {
     private MoneyBox box;
     private MoneyBox.Currency currency;
 
+    //TODO: Thrashed and has been replaces by MoneyBoxContainer
     public CalculationResult(int amount, MoneyBox box, MoneyBox.Currency currency) {
         if(amount < 0){
             throw new IllegalArgumentException("Amount must not be smaller than 0: " + amount);
