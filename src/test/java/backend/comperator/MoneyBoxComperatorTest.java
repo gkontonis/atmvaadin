@@ -51,42 +51,7 @@ public class MoneyBoxComperatorTest {
         assertEquals(moneyBoxComperator.compare(box1, box2), MoneyBoxComperator.SMALLER);
     }
 
-   // @Test TODO: Werner fragen
-   // public void testCompare_It_returns_1_when_first_amount_is_greater_than_second_amount() {
-   //     MoneyBoxComperator moneyBoxComperator = new MoneyBoxComperator();
-   //     MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 2);
-   //     MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 1);
-   //     assertEquals(moneyBoxComperator.compare(box1, box2), MoneyBoxComperator.GREATER);
-   // }
 
- //  @Test
- //  public void testCompare_It_returns_negative_1_when_first_amount_smaller_second_amount() {
- //      MoneyBoxComperator moneyBoxComperator = new MoneyBoxComperator();
- //      MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 1);
- //      MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 2);
- //      assertEquals(moneyBoxComperator.compare(box1, box2), MoneyBoxComperator.SMALLER);
- //  }
-
- //  //yee
- //  @Test
- //  public void testCompare_It_returns_1_when_first_amount_same_as_second_amount_AND_first_type_is_coin() {
- //      MoneyBoxComperator moneyBoxComperator = new MoneyBoxComperator();
- //      MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
- //      MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 1);
- //      assertEquals(moneyBoxComperator.compare(box1, box2), MoneyBoxComperator.SMALLER);
- //  }
-
- //  @Test
- //  public void testCompare_It_returns_negative_1_when_first_amount_same_as_second_amount_AND_first_type_is_NOTE() {
- //      MoneyBoxComperator moneyBoxComperator = new MoneyBoxComperator();
- //      MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 1);
- //      MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
- //      assertEquals(moneyBoxComperator.compare(box1, box2), MoneyBoxComperator.GREATER);
- //  }
-
-   //@Test
-   //public void testReversed() {
-   //}
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testThenComparing() {
