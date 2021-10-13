@@ -124,5 +124,54 @@ public class MoneyBoxContainerTest {
     }
     //-----------------------------------------
 
+    @Test
+    public void testWithdraw(){
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox newMoneyBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        moneyBoxContainer.deposit(newMoneyBox);
 
+        MoneyBox withdrawnBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
+
+        Assert.assertEquals(withdrawnBox, moneyBoxContainer.withdraw(withdrawnBox));
+        Assert.assertTrue(moneyBoxContainer.get(MoneyBox.Currency.A).get(0).getAmount() == 1);
+
+       // Assert.assertNotNull(moneyBoxContainer.get(MoneyBox.Currency.A));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testWithdraw_It_throws_exception_when_passed_moneybox_is_null(){
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox moneyBox = null;
+        moneyBoxContainer.withdraw(moneyBox);
+
+    }
+    @Test
+    public void testWithdraw_It_returns_null_when_container_doesnt_contain_requested_moneybox_of_type(){
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox newMoneyBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        moneyBoxContainer.deposit(newMoneyBox);
+
+        MoneyBox withdrawnBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 1);
+        moneyBoxContainer.withdraw(withdrawnBox);
+    }
+
+    @Test
+    public void testWithdraw_It_returns_null_when_container_doesnt_contain_requested_moneybox_of_value(){
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox newMoneyBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        moneyBoxContainer.deposit(newMoneyBox);
+
+        MoneyBox withdrawnBox = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 1);
+        moneyBoxContainer.withdraw(withdrawnBox);
+    }
+
+    @Test
+    public void testWithdraw_It_returns_null_when_requested_moneyboxamount_is_higher_than_stored(){
+        MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
+        MoneyBox newMoneyBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 2);
+        moneyBoxContainer.deposit(newMoneyBox);
+
+        MoneyBox withdrawnBox = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN, 10);
+        moneyBoxContainer.withdraw(withdrawnBox);
+    }
 }
