@@ -1,6 +1,5 @@
 package input.dto;
 
-import input.dto.PayoutRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -10,7 +9,7 @@ public class PayoutRequestTest {
     @Test
     public void testGetCurrencyType_It_is_the_set_currency_type() {
         PayoutRequest payoutRequest = new PayoutRequest('A', 3543);
-        Assert.assertEquals(payoutRequest.getCurrencyType(), 'A');
+        Assert.assertEquals(payoutRequest.getCurrency(), 'A');
     }
 
     @Test
@@ -27,7 +26,7 @@ public class PayoutRequestTest {
     @Test
     public void testGetCurrencyValue_It_is_the_set_currency_value() {
         PayoutRequest payoutRequest = new PayoutRequest('A', 3543);
-        Assert.assertEquals(payoutRequest.getCurrencyValue(), 3543);
+        Assert.assertEquals(payoutRequest.getValue(), 3543);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

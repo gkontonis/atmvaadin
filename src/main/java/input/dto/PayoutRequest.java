@@ -7,8 +7,8 @@ import java.util.Set;
 public class PayoutRequest {
     public static final Set<Character> POSSIBLE_CURRENCIES;
 
-    private final char currencyType;
-    private final int currencyValue;
+    private final char currency;
+    private final int value;
 
     static {
         Set<Character> tmp = new HashSet<>();
@@ -26,12 +26,12 @@ public class PayoutRequest {
         return currencyValue >= 0;
     }
 
-    public PayoutRequest(char currencyType, int currencyValue) {
-        validateCurrencyType(currencyType);
-        validateCurrencyValue(currencyValue);
+    public PayoutRequest(char currency, int value) {
+        validateCurrencyType(currency);
+        validateCurrencyValue(value);
 
-        this.currencyType = currencyType;
-        this.currencyValue = currencyValue;
+        this.currency = currency;
+        this.value = value;
     }
 
     private void validateCurrencyValue(int currencyValue) {
@@ -41,12 +41,12 @@ public class PayoutRequest {
         throw new IllegalArgumentException("Currency Value has to be >= 0");
     }
 
-    public char getCurrencyType() {
-        return currencyType;
+    public char getCurrency() {
+        return currency;
     }
 
-    public int getCurrencyValue() {
-        return currencyValue;
+    public int getValue() {
+        return value;
     }
 
     private void validateCurrencyType(char currencyType) {

@@ -38,7 +38,7 @@ public class DepositRequest {
             throw new IllegalArgumentException("Value must not be smaller 0");
         }
 
-        moneyBoxContainer.put(moneyBox);
+        moneyBoxContainer.deposit(moneyBox);
 
         return moneyBox;
     }
