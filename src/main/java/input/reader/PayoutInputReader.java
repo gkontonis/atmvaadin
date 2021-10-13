@@ -24,7 +24,7 @@ public class PayoutInputReader {
 
             request = convert(input);
 
-            if (request == null || request.getCurrencyValue() > 10000000) {
+            if (request == null || request.getValue() > 10000000) {
                 System.out.println("FALSCHE EINGABE");
                 continue;
             }

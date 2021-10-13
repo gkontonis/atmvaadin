@@ -24,16 +24,15 @@ public class DepositInputReader {
             System.out.println("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33) "); //TODO: Sinnvoller Text
             System.out.print(">");
             String input = sc.nextLine();
-            // if (input.equals("exit")) {
-            //     return null;
-            // }
+            if (input.equals("exit")) {
+                return null;
+            }
+            if(input.length() > 250){
+                System.out.println("EINGABE ZU LANG");
+                return null;
+            }
 
             depositRequest = convert(input);
-
-            //if (depositRequest == null || depositRequest.getCurrencyValue() > 10000000) {
-            //    System.out.println("FALSCHE EINGABE");
-            //    continue;
-            //}
 
             if (depositRequest == null) {
                 System.out.println("FALSCHE EINGABE");
@@ -47,15 +46,18 @@ public class DepositInputReader {
     }
 
     public DepositRequest convert(String input) {
-        DepositRequest result = new DepositRequest();
+        DepositRequest depositResult = new DepositRequest();
         if (input == null) {
             return null;
         }
         if (input.isEmpty()) {
             return null;
         }
+
         String[] inputStrings = input.split(" ");
 
+
+        //TODO: Split method funcuality into two diffrent methods, one handles the single part of the input string, the other splits into segments
         for (String inputPart : inputStrings) {
             char[] inputArray = inputPart.toCharArray();
 
@@ -91,7 +93,6 @@ public class DepositInputReader {
                     continue;
                 }
 
-                //TODO: same priciple as for first number part - maybe merge together?
                 if (isNumber(currentSign)) {
                     amount *= 10;
                     amount += toNumber(currentSign);
@@ -101,16 +102,16 @@ public class DepositInputReader {
                 if (amount <= 0) {
                     return null;
                 }
-                result.addMoneyBox(createMoneyBox(value, currencyChar, amount));
+                depositResult.addMoneyBox(createMoneyBox(value, currencyChar, amount));
             }
         }
-        if (result.getMoneyBoxContainer().isEmpty()) {
+        if (depositResult.getMoneyBoxContainer().isEmpty()) {
             return null;
         }
-        return result;
+        return depositResult;
     }
 
-    //TODO: createMoneyBox should probably not be done here
+    //TODO: createMoneyBox should probably not be done here??idk
     private MoneyBox createMoneyBox(int value, char currChar, int amount) {
         return new MoneyBox(value, CALCULATOR.getCurrency(currChar), CALCULATOR.getType(value, currChar), amount);
     }
