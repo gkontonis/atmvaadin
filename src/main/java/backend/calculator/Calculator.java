@@ -12,7 +12,15 @@ public class Calculator {
     private static MoneyBoxContainer container = new MoneyBoxContainer();
 
     public Calculator() {
-        this.container = container;
+        container.put(new MoneyBox(1, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN));
+        container.put(new MoneyBox(2, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN));
+        container.put(new MoneyBox(10, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN)); //not used
+        container.put(new MoneyBox(5, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
+        container.put(new MoneyBox(20, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
+        container.put(new MoneyBox(50, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
+        container.put(new MoneyBox(100, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
+        container.put(new MoneyBox(400, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
+
         container.put(new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
         container.put(new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
         container.put(new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
@@ -22,15 +30,6 @@ public class Calculator {
         container.put(new MoneyBox(100, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
         container.put(new MoneyBox(200, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
         container.put(new MoneyBox(500, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-
-        container.put(new MoneyBox(1, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN));
-        container.put(new MoneyBox(2, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN));
-        container.put(new MoneyBox(10, MoneyBox.Currency.B, MoneyBox.CurrencyType.COIN)); //not used
-        container.put(new MoneyBox(5, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
-        container.put(new MoneyBox(20, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
-        container.put(new MoneyBox(50, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
-        container.put(new MoneyBox(100, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
-        container.put(new MoneyBox(400, MoneyBox.Currency.B, MoneyBox.CurrencyType.NOTE));
     }
 
 
@@ -38,11 +37,10 @@ public class Calculator {
         if (moneyBoxContainer == null) {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
         }
-
         container = moneyBoxContainer;
     }
 
-    //TODO List of all MoneyBoxes and GetTypeMethod should probably be somewhere else
+    //GetTypeMethod should maybe be somewhere else
     public MoneyBox.CurrencyType getType(int value, char currencyChar) {
         MoneyBox.Currency currency = getCurrency(currencyChar);
         for (MoneyBox mb : container.get(currency)) {
@@ -113,12 +111,13 @@ public class Calculator {
         return resultMoneyBoxContainer;
     }
 
-    public void deposit(DepositRequest depositRequest) {
+    public MoneyBoxContainer deposit(DepositRequest depositRequest) {
         if (depositRequest == null) {
             throw new IllegalArgumentException("Deposit Request must not be null!");
 
         }
         container.depositContainer(depositRequest.getMoneyBoxContainer());
+        return container;
     }
 
     public MoneyBox.Currency getCurrency(char c) {
