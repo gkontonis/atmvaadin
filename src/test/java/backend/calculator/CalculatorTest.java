@@ -57,17 +57,8 @@ public class CalculatorTest {
         MoneyBoxContainer realResult = calculator.calculateSuggestedDenomination(payoutRequest);
         assertCalculationResults(realResult, expectedResult);
     }
-
-    //TODO Werner fragen wie man auf result testet
-    @Test
-    public void testCalculateSuggested_It_returns_valid_value_and_currency_pair() {
-        Calculator calculator = new Calculator();
-        PayoutRequest payoutRequest = new PayoutRequest('A', getCurrencyTotalBaseAmount(MoneyBox.Currency.A));
-        List<CalculationResult> result = new ArrayList<>();
-    }
     //---------------------------------------------------------------------------------------------------------------
 
-    //TODO Rename specifications
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testCalculatePossibleWithdrawal_It_throws_exception_when_request_is_null() {
         Calculator calculator = new Calculator();
@@ -159,14 +150,13 @@ public class CalculatorTest {
         return result;
     }
 
-
-    //TODO Not Ugly errorprone quick and dirty
+    //reworked
     private void assertCalculationResults(MoneyBoxContainer actual, MoneyBoxContainer expected) {
 
         boolean isValid = true;
         for (int i = 0; i < actual.get(MoneyBox.Currency.A).size(); i++) {
             MoneyBox actualMoneyBox = actual.get(MoneyBox.Currency.A).get(i);
-            MoneyBox expectedMoneyBox = actual.get(MoneyBox.Currency.A).get(i);
+            MoneyBox expectedMoneyBox = expected.get(MoneyBox.Currency.A).get(i);
             if (actualMoneyBox.getValue() != expectedMoneyBox.getValue() && actualMoneyBox.getAmount() != expectedMoneyBox.getAmount()) {
                 isValid = false;
                 break;
