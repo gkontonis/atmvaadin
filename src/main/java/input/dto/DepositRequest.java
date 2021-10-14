@@ -26,16 +26,7 @@ public class DepositRequest {
 
     public MoneyBox addMoneyBox(MoneyBox moneyBox) {
         if (moneyBox == null) {
-            throw new IllegalArgumentException("MoneyBox must not be null"); //TODO: ask if checks are needed
-        }
-        if (moneyBox.getCurrency() == null) {
-            throw new IllegalArgumentException("Currency must not be null");
-        }
-        if (moneyBox.getType() == null) {
-            throw new IllegalArgumentException("Type must not be null");
-        }
-        if (moneyBox.getValue() < 0) {
-            throw new IllegalArgumentException("Value must not be smaller 0");
+            throw new IllegalArgumentException("MoneyBox must not be null");
         }
 
         moneyBoxContainer.deposit(moneyBox);
@@ -47,4 +38,4 @@ public class DepositRequest {
         return moneyBoxContainer;
     }
 
- }
+}
