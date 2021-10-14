@@ -16,7 +16,7 @@ public class PayoutInputReader {
         PayoutRequest request = null;
 
         do {
-            System.out.print("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen |'exit' zum abbrechen: ");
+            System.out.print("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie abheben wollen |'exit' zum abbrechen: ");
             String input = sc.nextLine();
             if (input.equals("exit")) {
                 return null;
