@@ -27,11 +27,12 @@ public class DepositInputReader {
             if (input.equals("exit")) {
                 return null;
             }
-            if(input.length() > 250){
+            if (input.length() > 250) {
                 System.out.println("EINGABE ZU LANG");
                 return null;
             }
 
+            //TODO Fix convert should be fixed
             depositRequest = convert(input);
 
             if (depositRequest == null) {
@@ -45,65 +46,22 @@ public class DepositInputReader {
         return depositRequest;
     }
 
+    //----> fixconvert
     public DepositRequest convert(String input) {
         DepositRequest depositResult = new DepositRequest();
-        if (input == null) {
-            return null;
-        }
-        if (input.isEmpty()) {
+        if (input == null || input.isEmpty()) {
             return null;
         }
 
         String[] inputStrings = input.split(" ");
 
-
-        //TODO: Split method funcuality into two diffrent methods, one handles the single part of the input string, the other splits into segments
         for (String inputPart : inputStrings) {
             char[] inputArray = inputPart.toCharArray();
-
-            Character currencyChar = null;
-            int amount = 0;
-            int value = 0;
-
-            for (int i = 0; i < inputArray.length; i++) {
-                if (!isNumber(inputArray[0])) {
-                    return null;
-                }
-
-                if (isNumber(inputArray[0]) && toNumber(inputArray[0]) == 0) {
-                    return null;
-                }
-
-                char currentSign = inputArray[i];
-                if (isNumber(currentSign)) {
-                    value *= 10;
-                    value += toNumber(currentSign);
-                    continue;
-                }
-
-                if (!DepositRequest.isCurrencyTypeValid(currentSign)) {
-                    return null;
-                }
-
-                if (currencyChar == null) {
-                    if (!DepositRequest.isCurrencyTypeValid(currentSign)) {
-                        return null;
-                    }
-                    currencyChar = currentSign;
-                    continue;
-                }
-
-                if (isNumber(currentSign)) {
-                    amount *= 10;
-                    amount += toNumber(currentSign);
-                    continue;
-                }
-
-                if (amount <= 0) {
-                    return null;
-                }
-                depositResult.addMoneyBox(createMoneyBox(value, currencyChar, amount));
+            MoneyBox mb = convertToSingleBox(inputArray);
+            if (mb == null) {
+                return null;
             }
+            depositResult.addMoneyBox(mb);
         }
         if (depositResult.getMoneyBoxContainer().isEmpty()) {
             return null;
@@ -111,7 +69,54 @@ public class DepositInputReader {
         return depositResult;
     }
 
-    //TODO: createMoneyBox should probably not be done here??idk
+    //TODO Optimize
+    private MoneyBox convertToSingleBox(char[] source) {
+        int value = 0;
+        Character currencyChar = null;
+        int amount = 0;
+
+        if (!isNumber(source[0])) {
+            return null;
+        }
+        if (toNumber(source[0]) == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < source.length; i++) {
+
+            char currentSign = source[i];
+            if (isNumber(currentSign) && currencyChar == null) {
+                value *= 10;
+                value += toNumber(currentSign);
+                continue;
+            }
+
+            if (currencyChar == null) {
+                if (!DepositRequest.isCurrencyTypeValid(currentSign)) {
+                    return null;
+                }
+                currencyChar = currentSign;
+                continue;
+            }
+            //same principle twice, maybe fix
+            if (isNumber(currentSign)) {
+                amount *= 10;
+                amount += toNumber(currentSign);
+                continue;
+            }
+
+            if (amount <= 0) {
+                return null;
+            }
+        }
+
+        if (currencyChar == null || amount == 0) {
+            return null;
+        }
+
+        return createMoneyBox(value, currencyChar, amount);
+    }
+
     private MoneyBox createMoneyBox(int value, char currChar, int amount) {
         return new MoneyBox(value, CALCULATOR.getCurrency(currChar), CALCULATOR.getType(value, currChar), amount);
     }
