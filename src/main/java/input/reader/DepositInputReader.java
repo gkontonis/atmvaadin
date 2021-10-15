@@ -32,7 +32,6 @@ public class DepositInputReader {
                 return null;
             }
 
-            //TODO Fix convert should be fixed
             depositRequest = convert(input);
 
             if (depositRequest == null) {
@@ -92,10 +91,7 @@ public class DepositInputReader {
             }
 
             if (currencyChar == null) {
-                if (!DepositRequest.isCurrencyTypeValid(currentSign)) {
-                    return null;
-                }
-                currencyChar = currentSign;
+                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox (Currency Enum is in moneybox) - NOTE: Same TODO in PayoutInputReader
                 continue;
             }
             //same principle twice, maybe fix

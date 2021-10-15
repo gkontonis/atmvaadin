@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class MoneyBoxContainer {
     private static MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-    private Map<MoneyBox.Currency, List<MoneyBox>> containerMap = new HashMap<>();
+    private Map<Currency, List<MoneyBox>> containerMap = new HashMap<>();
 
 
     public List<MoneyBox> put(MoneyBox box) {
@@ -34,7 +34,7 @@ public class MoneyBoxContainer {
         return boxes;
     }
 
-    public List<MoneyBox> get(MoneyBox.Currency currency) {
+    public List<MoneyBox> get(Currency currency) {
         List<MoneyBox> result = containerMap.get(currency);
         if (result == null) {
             throw new IllegalArgumentException("Passed Currency " + currency + " was not found");
@@ -44,7 +44,7 @@ public class MoneyBoxContainer {
     }
 
     //TODO: MAP NOT SORTED & POSSIBLY ADD NEW METHOD TO RETURN List<List<MoneyBox>> which is sorted
-    public Map<MoneyBox.Currency, List<MoneyBox>> getMap() {
+    public Map<Currency, List<MoneyBox>> getMap() {
         return containerMap;
     }
 
@@ -53,7 +53,7 @@ public class MoneyBoxContainer {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
         }
 
-        for (MoneyBox.Currency currency : source.getMap().keySet()) {
+        for (Currency currency : source.getMap().keySet()) {
             for (MoneyBox box : source.getMap().get(currency)) {
                 this.deposit(box);
             }
@@ -78,7 +78,7 @@ public class MoneyBoxContainer {
             throw new IllegalArgumentException("MoneyBox must not be null!");
         }
 
-        for (MoneyBox.Currency currency : getMap().keySet()) {
+        for (Currency currency : moneyBoxContainer.getMap().keySet()) {
             for (MoneyBox mb : moneyBoxContainer.get(currency)) {
                 if (withdraw(mb) == null) {
                     return null;
@@ -92,12 +92,10 @@ public class MoneyBoxContainer {
         if (moneyBox == null) {
             return -1;
         }
-        for (MoneyBox.Currency currency : getMap().keySet()) {
-            List<MoneyBox> list = get(currency);
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getValue() == moneyBox.getValue() && list.get(i).getType() == moneyBox.getType()) {
-                    return i;
-                }
+        List<MoneyBox> list = get(moneyBox.getCurrency());
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getValue() == moneyBox.getValue() && list.get(i).getType() == moneyBox.getType()) {
+                return i;
             }
         }
         return -1;
@@ -129,7 +127,7 @@ public class MoneyBoxContainer {
         }
 
         for (MoneyBox box : containerMap.get(moneyBox.getCurrency())) {
-            if (box.getValue() == moneyBox.getValue() && box.getType() == moneyBox.getType()) {         //TODO could be replaced by box.equals() or comperator
+            if (box.getValue() == moneyBox.getValue() && box.getType() == moneyBox.getType()) {
                 box.setAmount(box.getAmount() + moneyBox.getAmount());
                 return;
             }

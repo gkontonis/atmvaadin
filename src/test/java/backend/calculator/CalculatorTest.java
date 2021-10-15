@@ -1,5 +1,7 @@
 package backend.calculator;
 
+import backend.entity.Currency;
+import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
 import input.dto.DepositRequest;
@@ -43,17 +45,17 @@ public class CalculatorTest {
     @Test
     public void testCalculateSuggested_It_is_same_currency_as_UserRequestCurrency() {
         Calculator calculator = new Calculator();
-        PayoutRequest payoutRequest = new PayoutRequest('A', 1);
+        PayoutRequest payoutRequest = new PayoutRequest(Currency.A, 1);
         MoneyBoxContainer result = calculator.calculateSuggestedDenomination(payoutRequest);
-        List<MoneyBox> moneyBoxList = result.get(MoneyBox.Currency.A);
+        List<MoneyBox> moneyBoxList = result.get(Currency.A);
         Assert.assertFalse(moneyBoxList.isEmpty());
     }
 
     @Test
     public void testCalculateSuggested_It_is_same_currencyResult_as_MoneyBox_values() {
         Calculator calculator = new Calculator();
-        PayoutRequest payoutRequest = new PayoutRequest('A', getCurrencyTotalBaseAmount(MoneyBox.Currency.A));
-        MoneyBoxContainer expectedResult = getCurrencyTotalBaseResult(MoneyBox.Currency.A);
+        PayoutRequest payoutRequest = new PayoutRequest(Currency.A, getCurrencyTotalBaseAmount(Currency.A));
+        MoneyBoxContainer expectedResult = getCurrencyTotalBaseResult(Currency.A);
         MoneyBoxContainer realResult = calculator.calculateSuggestedDenomination(payoutRequest);
         assertCalculationResults(realResult, expectedResult);
     }
@@ -70,12 +72,12 @@ public class CalculatorTest {
     public void testCalculatePossibleWithdrawal_It_returns_correct_list_if_request_can_be_fulfilled() {
         Calculator calculator = new Calculator();
         DepositRequest depositRequest = new DepositRequest();
-        depositRequest.addMoneyBox(new MoneyBox(100, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 3));
+        depositRequest.addMoneyBox(new MoneyBox(100, Currency.A, CurrencyType.NOTE, 3));
         calculator.deposit(depositRequest);
 
-        PayoutRequest payoutRequest = new PayoutRequest('A', 300);
+        PayoutRequest payoutRequest = new PayoutRequest(Currency.A, 300);
         MoneyBoxContainer results = calculator.calculatePossibleWithdrawal(payoutRequest);
-        MoneyBox moneyBox = results.get(MoneyBox.Currency.A).get(0);
+        MoneyBox moneyBox = results.get(Currency.A).get(0);
         Assert.assertTrue(moneyBox.getAmount() == 3 && moneyBox.getValue() == 100);
     }
 
@@ -83,10 +85,10 @@ public class CalculatorTest {
     public void testCalculatePayoutRequest_It_returns_empty_list_if_Payout_requested_amount_is_bigger_than_stored_amount() {
         Calculator calculator = new Calculator();
         DepositRequest depositRequest = new DepositRequest();
-        depositRequest.addMoneyBox(new MoneyBox(100, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 2));
+        depositRequest.addMoneyBox(new MoneyBox(100, Currency.A, CurrencyType.NOTE, 2));
         calculator.deposit(depositRequest);
 
-        PayoutRequest payoutRequest = new PayoutRequest('A', 300);
+        PayoutRequest payoutRequest = new PayoutRequest(Currency.A, 300);
         MoneyBoxContainer results = calculator.calculatePossibleWithdrawal(payoutRequest);
         Assert.assertTrue(results.isEmpty());
     }
@@ -111,19 +113,19 @@ public class CalculatorTest {
 
     //---------------------------------------------------------------------------------------------------------------
 
-    private int getCurrencyTotalBaseAmount(MoneyBox.Currency currency) {
+    private int getCurrencyTotalBaseAmount(Currency currency) {
         MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer();
 
 
-        moneyBoxContainer.put(new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
-        moneyBoxContainer.put(new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
-        moneyBoxContainer.put(new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(20, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(50, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(100, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(200, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        moneyBoxContainer.put(new MoneyBox(500, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(1, Currency.A, CurrencyType.COIN));
+        moneyBoxContainer.put(new MoneyBox(2, Currency.A, CurrencyType.COIN));
+        moneyBoxContainer.put(new MoneyBox(5, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(10, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(20, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(50, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(100, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(200, Currency.A, CurrencyType.NOTE));
+        moneyBoxContainer.put(new MoneyBox(500, Currency.A, CurrencyType.NOTE));
 
         List<MoneyBox> boxes = moneyBoxContainer.get(currency);
         int currencyTotalAmount = 0;
@@ -134,18 +136,18 @@ public class CalculatorTest {
         return currencyTotalAmount;
     }
 
-    private MoneyBoxContainer getCurrencyTotalBaseResult(MoneyBox.Currency currency) {
+    private MoneyBoxContainer getCurrencyTotalBaseResult(Currency currency) {
         MoneyBoxContainer result = new MoneyBoxContainer();
 
-        result.put(new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
-        result.put(new MoneyBox(2, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN));
-        result.put(new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(20, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(50, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(100, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(200, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
-        result.put(new MoneyBox(500, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE));
+        result.put(new MoneyBox(1, Currency.A,CurrencyType.COIN));
+        result.put(new MoneyBox(2, Currency.A,CurrencyType.COIN));
+        result.put(new MoneyBox(5, Currency.A,CurrencyType.NOTE));
+        result.put(new MoneyBox(10, Currency.A, CurrencyType.NOTE));
+        result.put(new MoneyBox(20, Currency.A, CurrencyType.NOTE));
+        result.put(new MoneyBox(50, Currency.A, CurrencyType.NOTE));
+        result.put(new MoneyBox(100, Currency.A, CurrencyType.NOTE));
+        result.put(new MoneyBox(200, Currency.A, CurrencyType.NOTE));
+        result.put(new MoneyBox(500, Currency.A, CurrencyType.NOTE));
 
         return result;
     }
@@ -154,9 +156,9 @@ public class CalculatorTest {
     private void assertCalculationResults(MoneyBoxContainer actual, MoneyBoxContainer expected) {
 
         boolean isValid = true;
-        for (int i = 0; i < actual.get(MoneyBox.Currency.A).size(); i++) {
-            MoneyBox actualMoneyBox = actual.get(MoneyBox.Currency.A).get(i);
-            MoneyBox expectedMoneyBox = expected.get(MoneyBox.Currency.A).get(i);
+        for (int i = 0; i < actual.get(Currency.A).size(); i++) {
+            MoneyBox actualMoneyBox = actual.get(Currency.A).get(i);
+            MoneyBox expectedMoneyBox = expected.get(Currency.A).get(i);
             if (actualMoneyBox.getValue() != expectedMoneyBox.getValue() && actualMoneyBox.getAmount() != expectedMoneyBox.getAmount()) {
                 isValid = false;
                 break;

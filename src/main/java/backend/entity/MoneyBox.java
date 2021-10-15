@@ -1,9 +1,8 @@
 package backend.entity;
 
 public class MoneyBox {
-    public enum Currency {A, B}
-
-    public enum CurrencyType {COIN, NOTE}
+    //public enum Currency {A, B} //TODO: Extracted Enum into its own Object done. - Add a doesCurrencyExist() method.
+    //public enum CurrencyType {COIN, NOTE}
 
     private int value;
     private Currency currency;

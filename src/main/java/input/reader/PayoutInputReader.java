@@ -1,10 +1,13 @@
 package input.reader;
 
+import backend.calculator.Calculator;
 import input.dto.PayoutRequest;
 
 import java.util.Scanner;
 
 public class PayoutInputReader {
+    private final Calculator CALCULATOR = new Calculator();
+
 
     public static final int ASCII_OFFSET = 48;
 
@@ -16,17 +19,18 @@ public class PayoutInputReader {
         PayoutRequest request = null;
 
         do {
-            System.out.print("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie abheben wollen |'exit' zum abbrechen: ");
+            System.out.println("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen: "); //VAR B
+            //System.out.print("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen |'exit' zum abbrechen: "); //VAR A
             String input = sc.nextLine();
-            if (input.equals("exit")) {
-                return null;
-            }
+            // if (input.equals("exit")) { //VAR A
+            //     return null;
+            // }
 
             request = convert(input);
 
             if (request == null || request.getValue() > 10000000) {
-                System.out.println("FALSCHE EINGABE");
-                continue;
+                System.out.println("FALSCHE EINGABE\n");
+                return null;
             }
             isUserInput = false;
         }
@@ -46,7 +50,7 @@ public class PayoutInputReader {
         input = input.trim();
         char[] inputArray = input.toCharArray();
 
-        Character currencyTypePart = null;
+        Character currencyChar = null;
         int numberPart = 0;
 
         for (int i = 0; i < inputArray.length; i++) {
@@ -65,18 +69,15 @@ public class PayoutInputReader {
                 continue;
             }
 
-            if (!PayoutRequest.isCurrencyTypeValid(currentSign)) {
-                return null;
-            }
-            currencyTypePart = currentSign;
+            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox (Currency Enum is in moneybox) - NOTE: Same TODO in DepositInputReader
             break;
         }
 
-        if (currencyTypePart == null) {
+        if (currencyChar == null) {
             return null;
         }
 
-        return new PayoutRequest(currencyTypePart, numberPart);
+        return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
 
     private int toNumber(char digit) {

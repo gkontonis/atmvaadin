@@ -1,5 +1,7 @@
 package output;
 
+import backend.entity.Currency;
+import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
 
@@ -7,22 +9,25 @@ import java.util.List;
 
 public class Output {
     public void printContainer(MoneyBoxContainer moneyBoxContainer) {
+        if (moneyBoxContainer == null){
+            return;
+        }
 
         String output;
-        MoneyBox.CurrencyType currencyType;
+        CurrencyType currencyType;
 
 
-        for (MoneyBox.Currency currency : moneyBoxContainer.getMap().keySet()) {
+        for (Currency currency : moneyBoxContainer.getMap().keySet()) {
             output = "";
             currencyType = null;
             List<MoneyBox> resultList = moneyBoxContainer.get(currency);
             for (MoneyBox currentMoneyBox : resultList) {
                 if (currencyType == null) {
-                    output += currentMoneyBox.getType() == MoneyBox.CurrencyType.NOTE ? "S " : "M ";
+                    output += currentMoneyBox.getType() == CurrencyType.NOTE ? "S " : "M ";
                     currencyType = currentMoneyBox.getType();
                 }
 
-                if (currencyType == MoneyBox.CurrencyType.NOTE && currentMoneyBox.getType() == MoneyBox.CurrencyType.COIN) {
+                if (currencyType == CurrencyType.NOTE && currentMoneyBox.getType() == CurrencyType.COIN) {
                     output += "M ";
                     currencyType = currentMoneyBox.getType();
                 }
@@ -35,9 +40,9 @@ public class Output {
 
     public void printContainerB(MoneyBoxContainer moneyBoxContainer) {
         String output;
-        MoneyBox.CurrencyType currencyType;
+        CurrencyType currencyType;
 
-        for (MoneyBox.Currency currency : moneyBoxContainer.getMap().keySet()) {
+        for (Currency currency : moneyBoxContainer.getMap().keySet()) {
             output = "";
             currencyType = null;
             int totalOfType = 0;
@@ -45,7 +50,7 @@ public class Output {
             List<MoneyBox> resultList = moneyBoxContainer.get(currency);
             for (MoneyBox currentMoneyBox : resultList) {
                 if (currencyType != currentMoneyBox.getType()) {
-                    if (currentMoneyBox.getType() == MoneyBox.CurrencyType.NOTE) {
+                    if (currentMoneyBox.getType() == CurrencyType.NOTE) {
                         output += "Noten: ";
                         currencyType = currentMoneyBox.getType();
                     } else {

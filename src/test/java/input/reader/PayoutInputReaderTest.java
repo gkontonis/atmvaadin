@@ -49,13 +49,6 @@ public class PayoutInputReaderTest {
     }
 
     @Test
-    public void testConvert_It_returns_null_when_String_currencypart_is_not_defined_as_possible_currency(){
-        PayoutInputReader inputReader = new PayoutInputReader();
-        String invalideCurrency = String.valueOf(PayoutRequestTest.INVALID_CURRENCY);
-        Assert.assertNull(inputReader.convert(invalideCurrency));
-    }
-
-    @Test
     public void testConvert_It_returns_null_when_String_numberpart_is_longer_than_eight_digits(){
         PayoutInputReader inputReader = new PayoutInputReader();
         Assert.assertNull(inputReader.convert("123456789"));

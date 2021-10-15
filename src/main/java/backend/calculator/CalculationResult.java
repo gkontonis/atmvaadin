@@ -1,14 +1,15 @@
 package backend.calculator;
 
+import backend.entity.Currency;
 import backend.entity.MoneyBox;
 
 public class CalculationResult {
     private int amount;
     private MoneyBox box;
-    private MoneyBox.Currency currency;
+    private Currency currency;
 
     //Thrashed and has been replaces by MoneyBoxContainer
-    public CalculationResult(int amount, MoneyBox box, MoneyBox.Currency currency) {
+    public CalculationResult(int amount, MoneyBox box, Currency currency) {
         if(amount < 0){
             throw new IllegalArgumentException("Amount must not be smaller than 0: " + amount);
         }
@@ -33,7 +34,7 @@ public class CalculationResult {
         return box;
     }
 
-    public MoneyBox.Currency getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 }

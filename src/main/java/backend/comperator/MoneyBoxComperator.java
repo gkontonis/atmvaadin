@@ -1,5 +1,6 @@
 package backend.comperator;
 
+import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 
 import java.util.Comparator;
@@ -16,11 +17,11 @@ public class MoneyBoxComperator implements Comparator<MoneyBox> {
 
     @Override
     public int compare(MoneyBox o1, MoneyBox o2) {
-        if (o1.getType() == MoneyBox.CurrencyType.NOTE && o2.getType() == MoneyBox.CurrencyType.COIN) {
+        if (o1.getType() == CurrencyType.NOTE && o2.getType() == CurrencyType.COIN) {
             return GREATER;
         }
 
-        if (o1.getType() == MoneyBox.CurrencyType.COIN && o2.getType() == MoneyBox.CurrencyType.NOTE) {
+        if (o1.getType() == CurrencyType.COIN && o2.getType() == CurrencyType.NOTE) {
             return SMALLER;
         }
 

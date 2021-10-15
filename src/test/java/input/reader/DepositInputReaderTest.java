@@ -1,5 +1,7 @@
 package input.reader;
 
+import backend.entity.Currency;
+import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import input.dto.DepositRequest;
 import org.testng.Assert;
@@ -7,7 +9,6 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-//TODO Specify, for now just copied
 public class DepositInputReaderTest {
 
     @Test
@@ -69,9 +70,9 @@ public class DepositInputReaderTest {
     public void testTestConvert_It_returns_valid_depositResult() {
         DepositInputReader depositInputReader = new DepositInputReader();
         DepositRequest expected = new DepositRequest();
-        expected.addMoneyBox(new MoneyBox(20, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE, 10));
+        expected.addMoneyBox(new MoneyBox(20, Currency.A, CurrencyType.NOTE, 10));
         DepositRequest actual = depositInputReader.convert("20A10");
-        Assert.assertTrue(expected.getMoneyBoxContainer().contains(actual.getMoneyBoxContainer().get(MoneyBox.Currency.A).get(0)));
+        Assert.assertTrue(expected.getMoneyBoxContainer().contains(actual.getMoneyBoxContainer().get(Currency.A).get(0)));
     }
 
 }

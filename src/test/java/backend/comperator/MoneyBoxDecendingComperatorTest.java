@@ -1,6 +1,8 @@
 package backend.comperator;
 
 import backend.comperator.MoneyBoxDecendingComperator;
+import backend.entity.Currency;
+import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,48 +17,48 @@ public class MoneyBoxDecendingComperatorTest {
     @Test
     public void testCompare_It_returns_0_when_type_and_value_are_equal() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box1 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2), 0);
     }
 
     @Test
     public void testCompare_It_returns_1_when_first_value_greater_second_value() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box1 = new MoneyBox(5, Currency.A, CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2),  MoneyBoxDecendingComperator.SMALLER);
     }
 
     @Test
     public void testCompare_It_returns_negative1_when_first_value_smaller_second_value() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box1 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(5, Currency.A, CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2),  MoneyBoxDecendingComperator.GREATER);
     }
 
     @Test
     public void testCompare_It_returns_1_when_first_and_second_value_are_same_and_first_type_is_note() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
-        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
+        MoneyBox box1 = new MoneyBox(1, Currency.A, CurrencyType.NOTE);
+        MoneyBox box2 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2), MoneyBoxDecendingComperator.SMALLER);
     }
     @Test
     public void testCompare_It_returns_negative1_when_first_and_second_value_are_same_and_first_type_is_coin() {
         MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
-        MoneyBox box1 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
+        MoneyBox box1 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(1, Currency.A, CurrencyType.NOTE);
         assertEquals(moneyBoxDecendingComperator.compare(box1, box2),  MoneyBoxDecendingComperator.GREATER);
     }
 
     @Test
     public void testCompare_It_sorts_a_list_with_notes_before_coins_and_bigges_value_first(){
-        MoneyBox box1 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box2 = new MoneyBox(1, MoneyBox.Currency.A, MoneyBox.CurrencyType.COIN);
-        MoneyBox box3 = new MoneyBox(5, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
-        MoneyBox box4 = new MoneyBox(10, MoneyBox.Currency.A, MoneyBox.CurrencyType.NOTE);
+        MoneyBox box1 = new MoneyBox(5, Currency.A, CurrencyType.COIN);
+        MoneyBox box2 = new MoneyBox(1, Currency.A, CurrencyType.COIN);
+        MoneyBox box3 = new MoneyBox(5, Currency.A, CurrencyType.NOTE);
+        MoneyBox box4 = new MoneyBox(10, Currency.A, CurrencyType.NOTE);
         List<MoneyBox> boxes = new ArrayList<>(4);
         boxes.add(box1);
         boxes.add(box2);
