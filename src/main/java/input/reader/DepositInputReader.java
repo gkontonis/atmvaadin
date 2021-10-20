@@ -21,7 +21,7 @@ public class DepositInputReader {
         DepositRequest depositRequest = null;
 
         do {
-            System.out.println("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33) "); //TODO: Sinnvoller Text
+            System.out.println("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33) ");
             System.out.print(">");
             String input = sc.nextLine();
             if (input.equals("exit")) {
@@ -31,13 +31,12 @@ public class DepositInputReader {
                 System.out.println("EINGABE ZU LANG");
                 return null;
             }
-
             depositRequest = convert(input);
-
             if (depositRequest == null) {
-                System.out.println("FALSCHE EINGABE");
+                System.out.println("INTERNER FEHLER");
                 continue;
             }
+
             isUserInput = false;
         }
         while (isUserInput);
@@ -45,7 +44,6 @@ public class DepositInputReader {
         return depositRequest;
     }
 
-    //----> fixconvert
     public DepositRequest convert(String input) {
         DepositRequest depositResult = new DepositRequest();
         if (input == null || input.isEmpty()) {
@@ -91,7 +89,7 @@ public class DepositInputReader {
             }
 
             if (currencyChar == null) {
-                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox (Currency Enum is in moneybox) - NOTE: Same TODO in PayoutInputReader
+                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in PayoutInputReader
                 continue;
             }
             //same principle twice, maybe fix

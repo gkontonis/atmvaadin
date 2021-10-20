@@ -15,9 +15,7 @@ public class DepositRequest {
         if (moneyBox == null) {
             throw new IllegalArgumentException("MoneyBox must not be null");
         }
-
         moneyBoxContainer.deposit(moneyBox);
-
         return moneyBox;
     }
 
