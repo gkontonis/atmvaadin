@@ -37,13 +37,14 @@ public class MoneyBoxContainer {
     public List<MoneyBox> get(Currency currency) {
         List<MoneyBox> result = containerMap.get(currency);
         if (result == null) {
-            throw new IllegalArgumentException("Passed Currency " + currency + " was not found");
+            //throw new IllegalArgumentException("Passed Currency " + currency + " was not found");
+            throw new IllegalArgumentException("WÄHRUNG: " + currency + "NICHT GEFUNDEN ");
         }
         result.sort(moneyBoxDecendingComperator);
         return result;
     }
 
-    //TODO: MAP NOT SORTED & POSSIBLY ADD NEW METHOD TO RETURN List<List<MoneyBox>> which is sorted
+    //TODO: MAYBE MAP NOT SORTED & POSSIBLY ADD NEW METHOD TO RETURN List<List<MoneyBox>> which is sorted
     public Map<Currency, List<MoneyBox>> getMap() {
         return containerMap;
     }
