@@ -20,7 +20,6 @@ public class PayoutInputReader {
 
         do {
             System.out.println("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen: "); //VAR B
-            //System.out.print("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen |'exit' zum abbrechen: "); //VAR A
             String input = sc.nextLine();
             // if (input.equals("exit")) { //VAR A
             //     return null;
@@ -28,8 +27,12 @@ public class PayoutInputReader {
 
             request = convert(input);
 
-            if (request == null || request.getValue() > 10000000) {
-                System.out.println("FALSCHE EINGABE\n");
+            if (request == null) {
+                System.out.println("FEHLERHAFTE EINGABE\n");
+                return null;
+            }
+            if (request.getValue() > 10000000) {
+                System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
                 return null;
             }
             isUserInput = false;
@@ -69,7 +72,7 @@ public class PayoutInputReader {
                 continue;
             }
 
-            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox (Currency Enum is in moneybox) - NOTE: Same TODO in DepositInputReader
+            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in DepositInputReader
             break;
         }
 
