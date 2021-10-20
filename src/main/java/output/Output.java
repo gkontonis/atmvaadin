@@ -72,4 +72,8 @@ public class Output {
             System.out.println();
         }
     }
+
+    public void printErrorMsg(String errormsg){
+        System.out.println(errormsg);
+    }
 }
