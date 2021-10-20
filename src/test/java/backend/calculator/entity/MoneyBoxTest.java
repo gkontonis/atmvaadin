@@ -71,7 +71,6 @@ public class MoneyBoxTest {
         Assert.assertNotNull(new MoneyBox(10, Currency.A, null));
     }
 
-    //---------------------------------------------------------------------------------------------------------------
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testMoneyBox_It_is_invalid_when_amount_less_than_zero() {
         new MoneyBox(1, Currency.A, CurrencyType.COIN, -1);
@@ -94,6 +93,8 @@ public class MoneyBoxTest {
         MoneyBox moneyBox = new MoneyBox(5, Currency.A, CurrencyType.NOTE, 5);
         Assert.assertEquals(moneyBox.getAmount(), 5);
     }
+    //----------------------------------------------------------------------------------------------------------------
+
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testDeposit_Is_invalid_when_amount_is_less_than_zero() {
@@ -171,4 +172,18 @@ public class MoneyBoxTest {
         MoneyBox moneyBox = new MoneyBox(10, Currency.A, CurrencyType.NOTE);
         Assert.assertEquals(moneyBox.getType(), CurrencyType.NOTE);
     }
+
+    //----------------------------------------------------------------------------------------------------------------
+
+   // @Test
+   // public void testValidateCurrency_Currency_Is_valid(){
+   //     MoneyBox moneyBox = new MoneyBox(10, Currency.A, CurrencyType.NOTE);
+   //     Assert.assertTrue(moneyBox.validateCurrency(moneyBox.getCurrency()));
+   // }
+//
+   // @Test
+   // public void testValidateCurrency_Currency_Is_valid_B(){
+   //     MoneyBox moneyBox = new MoneyBox(10, Currency.B, CurrencyType.NOTE);
+   //     Assert.assertTrue(moneyBox.validateCurrency(moneyBox.getCurrency()));
+   // }
 }
