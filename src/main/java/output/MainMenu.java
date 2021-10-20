@@ -24,21 +24,34 @@ public class MainMenu {
             System.out.println("3) Status");
             System.out.println("4) Beenden");
             System.out.print("> ");
+            String input = sc.nextLine();
 
-            char input = sc.nextLine().charAt(0);
 
-            if (input == '1') {
-                showDepositMenu();
-            } else if (input == '2') {
-                showWithdrawalMenu();
-            } else if (input == '3') {
-                showStatus();
-            } else if (input == '4') {
-                askInput = false;
-            } else {
-                System.out.println("FALSCHE EINGABE\n");
+            if (input.length() < 0) {
+                System.out.println("FEHLERHAFTE EINGABE\n");
+                //showMainMenu();
+                return;
+            }
+
+            //TODO: -> Ifs to switchCase -> in all menus
+            switch (input) {
+                case "1":
+                    showDepositMenu();
+                    break;
+                case "2":
+                    showWithdrawalMenu();
+                    break;
+                case "3":
+                    showStatus();
+                    break;
+                case "4":
+                    askInput = false;
+                    break;
+                default:
+                    System.out.println("FEHLERHAFTE EINGABE\n");
             }
         }
+        System.out.println("Vielen Dank, dass Sie den LehrlingsATM benutzt haben. Wir wünschen Ihnen einen schönen Tag!");
     }
 
     private void showDepositMenu() {
@@ -50,34 +63,56 @@ public class MainMenu {
         System.out.println("3 Hauptmenü");
         System.out.print("> ");
 
-        char input = sc.nextLine().charAt(0);
-        if (input == '1') {
-            calc.deposit(calc.calculateSuggestedDenomination(po.getUserinput())); //TODO: currently calls PayoutInput reader. This sucks
-        } else if (input == '2') {
-            calc.deposit(dp.getUserinput());
-        } else if (input == '3') {
+        String input = sc.nextLine();
+
+        if (input.length() < 0) {
+            System.out.println("FEHLERHAFTE EINGABE\n");
             return;
-        } else {
-            System.out.println("FALSCHE EINGABE\n");
+        }
+
+        switch (input) {
+            case "1":
+                calc.deposit(calc.calculateSuggestedDenomination(po.getUserinput())); //TODO: currently calls PayoutInput reader. Fix
+                break;
+            case "2":
+                calc.deposit(dp.getUserinput());
+                break;
+            case "3":
+                return;
+            default:
+                System.out.println("FEHLERHAFTE EINGABE\n");
         }
     }
 
     private void showWithdrawalMenu() {
+        //TODO: Auszahlen Gestückelt
         PayoutInputReader po = new PayoutInputReader();
         System.out.println("1) Gesamtbetrag");
-        System.out.println("2) Hauptmenü");
+        System.out.println("2) Gestückelt");
+        System.out.println("3) Hauptmenü");
         System.out.print("> ");
 
-        char input = sc.nextLine().charAt(0);
-        if (input == '1') {
-             printer.printContainer(calc.calculateAndWithdraw(po.getUserinput()));
-        } else if (input == '2') {
+        String input = sc.nextLine();
+
+        if (input.length() < 0) {
+            System.out.println("FEHLERHAFTE EINGABE\n");
             return;
-        } else {
-            System.out.println("FALSCHE EINGABE\n");
+        }
+
+        switch (input) {
+            case "1":
+                printer.printContainer(calc.calculateAndWithdraw(po.getUserinput()));
+                break;
+            case "2":
+                System.out.println("Not yet implemented");
+                return;
+                //break;
+            case "3":
+                return;
+            default:
+                System.out.println("FEHLERHAFTE EINGABE\n");
         }
     }
-
     private void showStatus() {
         printer.printContainerB(calc.getContainer());
     }
