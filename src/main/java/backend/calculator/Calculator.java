@@ -6,11 +6,14 @@ import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
 import input.dto.DepositRequest;
 import input.dto.PayoutRequest;
+import input.reader.DepositInputReader;
+import output.Output;
 
 import java.util.List;
 
 public class Calculator {
     private static MoneyBoxContainer initialContainer = new MoneyBoxContainer();
+    private Output out;
 
     public Calculator() {
         initialContainer.put(new MoneyBox(1, Currency.B, CurrencyType.COIN));
@@ -35,7 +38,9 @@ public class Calculator {
 
     public Calculator(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null) {
-            throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
+            //throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
+            System.out.println("INTERNER FEHLER");
+            return;
         }
         initialContainer = moneyBoxContainer;
     }
@@ -54,6 +59,7 @@ public class Calculator {
     //Bsp 1. Stückelungen, schaut nicht ob vorhanden
     public MoneyBoxContainer calculateSuggestedDenomination(PayoutRequest payoutRequest) {
         if (payoutRequest == null) {
+            out.printErrorMsg("");
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
 
@@ -62,7 +68,6 @@ public class Calculator {
         int userRequestValue = payoutRequest.getValue();
 
         MoneyBoxContainer result = new MoneyBoxContainer();
-        //List<CalculationResult> result = new ArrayList<>();
 
         for (MoneyBox box : boxes) {
             int amount = userRequestValue / box.getValue();
@@ -70,14 +75,14 @@ public class Calculator {
                 continue;
             }
             userRequestValue = userRequestValue % box.getValue();
-            //System.out.println("DEBUG: " + box.getValue() + " " + box.getType().toString() + " " +  amount);
             result.deposit(new MoneyBox(box.getValue(), box.getCurrency(), box.getType(), amount));
         }
         return result;
     }
 
+
     public MoneyBoxContainer calculateAndWithdraw(PayoutRequest payoutRequest) {
-        if (payoutRequest == null){
+        if (payoutRequest == null) {
             return null;
         }
         MoneyBoxContainer result = initialContainer.withdraw(calculatePossibleWithdrawal(payoutRequest));
@@ -134,14 +139,26 @@ public class Calculator {
 
     public Currency getCurrency(char c) {
         for (int i = 0; i < Currency.values().length; i++){
-            if (String.valueOf(c) == Currency.values()[i].name()){
+            if (String.valueOf(c).equals(Currency.values()[i].name())){
                 return Currency.values()[i];
             }
         }
         throw new IllegalArgumentException("Couldnt find currency " + c);       //TODO: Maybe instead return null?
     }
 
+
     public MoneyBoxContainer getContainer() {
         return initialContainer;
     }
+
+
+  // public boolean validateCurrency(Currency curr) {
+  //       for (Currency c : currencies) {
+  //          if (c.equals(curr)) {
+  //              return true;
+  //          }
+  //      }
+  //      System.out.println("Currency is invalid");
+  //      return false;
+  //  }
 }
