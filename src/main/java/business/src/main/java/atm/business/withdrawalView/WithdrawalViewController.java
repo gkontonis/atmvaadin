@@ -1,51 +1,32 @@
-package input.reader;
+package business.src.main.java.atm.business.withdrawalView;
 
 import backend.calculator.Calculator;
+import backend.entity.MoneyBoxContainer;
 import input.dto.PayoutRequest;
 
-import java.util.Scanner;
+public class WithdrawalViewController {
 
-public class PayoutInputReader {
-    private final Calculator CALCULATOR = new Calculator();
-
+    private Calculator CALCULATOR = new Calculator();
     public static final int ASCII_OFFSET = 48;
 
-    public PayoutRequest getUserinput() {
-        Scanner sc = new Scanner(System.in);
-
-        boolean isUserInput = true;
-
+    public MoneyBoxContainer withdrawal(String input) {
+        CALCULATOR = new Calculator();
         PayoutRequest payoutRequest = null;
-
-        do {
-            System.out.println("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen: "); //VAR B
-            String input = sc.nextLine();
-            // if (input.equals("exit")) { //VAR A
-            //     return null;
-            // }
-
-            payoutRequest = convert(input);
-
-            if (payoutRequest == null) {
-                System.out.println("FEHLERHAFTE EINGABE\n");
-                return null;
-            }
-            if (payoutRequest.getValue() > 10000000) {
-                System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
-                return null;
-            }
-            isUserInput = false;
+        payoutRequest = convert(input);
+        if (payoutRequest == null) {
+            System.out.println("FEHLERHAFTE EINGABE\n");
         }
-        while (isUserInput);
-
-        return payoutRequest;
+        if (payoutRequest.getValue() > 10000000) {
+            System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
+        }
+        return CALCULATOR.calculateAndWithdraw(payoutRequest);
     }
 
     public PayoutRequest convert(String input) {
         if (input == null) {
             return null;
         }
-        if(input.contains(".") || input.contains(",")){
+        if (input.contains(".") || input.contains(",")) {
             return null;
         }
         if (input.isEmpty()) {
@@ -73,7 +54,7 @@ public class PayoutInputReader {
                 continue;
             }
 
-            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in DepositInputReader
+            currencyChar = currentSign;
             break;
         }
 
@@ -83,6 +64,7 @@ public class PayoutInputReader {
 
         return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
+
 
     private int toNumber(char digit) {
         return digit - ASCII_OFFSET;

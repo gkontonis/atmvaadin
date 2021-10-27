@@ -8,6 +8,7 @@ import backend.entity.MoneyBoxContainer;
 import java.util.List;
 
 public class Output {
+    //Karlis
     public void printContainer(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null){
             return;
@@ -37,7 +38,7 @@ public class Output {
             System.out.println(output);
         }
     }
-
+    //werners
     public void printContainerB(MoneyBoxContainer moneyBoxContainer) {
         String output;
         CurrencyType currencyType;

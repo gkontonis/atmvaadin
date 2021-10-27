@@ -5,7 +5,7 @@ import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import sun.misc.ASCIICaseInsensitiveComparator;
+//import sun.misc.ASCIICaseInsensitiveComparator;
 
 public class MoneyBoxTest {
     @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,55 +1,41 @@
-package input.reader;
+package business.src.main.java.atm.business.depositView;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
 import input.dto.DepositRequest;
 import input.dto.PayoutRequest;
 
-import java.util.Scanner;
-
-public class DepositInputReader {
+public class DepositViewController {
 
     private final Calculator CALCULATOR = new Calculator();
-
     public static final int ASCII_OFFSET = 48;
 
-    public DepositRequest getUserinput() {
-        Scanner sc = new Scanner(System.in);
-
-        boolean isUserInput = true;
-
+    public void deposit(String input) {
         DepositRequest depositRequest = null;
 
-        do {
-            System.out.println("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33) ");
-            System.out.print(">");
-            String input = sc.nextLine();
-            if (input.equals("exit")) {
-                return null;
-            }
-            if (input.length() > 250) {
-                System.out.println("EINGABE ZU LANG");
-                return null;
-            }
-            depositRequest = convert(input);
-            if (depositRequest == null) {
-                System.out.println("INTERNER FEHLER");
-                continue;
-            }
-
-            isUserInput = false;
+        if (input.length() > 250) {
+            throw new IllegalArgumentException("Input is too long!");
         }
-        while (isUserInput);
-
-        return depositRequest;
+        depositRequest = convertToDepositRequest(input);
+        if (depositRequest == null) {
+            throw new IllegalStateException("Deposit Request must not be null!");
+        }
+        CALCULATOR.deposit(depositRequest);
     }
 
-    public DepositRequest convert(String input) {
+    public void depositTotal(String input) {
+        if (input.length() > 250) {
+            throw new IllegalArgumentException("Input is too long!");
+        }
+        CALCULATOR.deposit(CALCULATOR.calculateSuggestedDenomination(convertToPayoutrequest(input)));
+    }
+
+    private DepositRequest convertToDepositRequest(String input) {
         DepositRequest depositResult = new DepositRequest();
         if (input == null || input.isEmpty()) {
             return null;
         }
-        if(input.contains(".") || input.contains(",")){
+        if (input.contains(".") || input.contains(",")) {
             return null;
         }
         String[] inputStrings = input.split(" ");
@@ -123,6 +109,53 @@ public class DepositInputReader {
 
     private boolean isNumber(char digit) {
         return digit >= '0' && digit <= '9';
+    }
+    //--------------------------------------------------------------------------------------------
+
+    public PayoutRequest convertToPayoutrequest(String input) {
+        if (input == null) {
+            return null;
+        }
+        if (input.contains(".") || input.contains(",")) {
+            return null;
+        }
+        if (input.isEmpty()) {
+            return null;
+        }
+        input = input.trim();
+        char[] inputArray = input.toCharArray();
+
+        Character currencyChar = null;
+        int numberPart = 0;
+
+        for (int i = 0; i < inputArray.length; i++) {
+            if (!isNumber(inputArray[0])) {
+                return null;
+            }
+
+            if (isNumber(inputArray[0]) && toNumber(inputArray[0]) == 0) {
+                return null;
+            }
+
+            char currentSign = inputArray[i];
+            if (isNumber(currentSign)) {
+                numberPart *= 10;
+                numberPart += toNumber(currentSign);
+                continue;
+            }
+
+            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in DepositInputReader
+            break;
+        }
+
+        if (currencyChar == null) {
+            return null;
+        }
+        if (numberPart > 10000000) {
+            System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
+            return null;
+        }
+        return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
 
 }

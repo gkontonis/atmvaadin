@@ -13,7 +13,6 @@ import java.util.List;
 
 public class Calculator {
     private static MoneyBoxContainer initialContainer = new MoneyBoxContainer();
-    private Output out;
 
     public Calculator() {
         initialContainer.put(new MoneyBox(1, Currency.B, CurrencyType.COIN));
@@ -38,9 +37,9 @@ public class Calculator {
 
     public Calculator(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null) {
-            //throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
-            System.out.println("INTERNER FEHLER");
-            return;
+            throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
+           // System.out.println("INTERNER FEHLER");
+           // return;
         }
         initialContainer = moneyBoxContainer;
     }
@@ -59,7 +58,6 @@ public class Calculator {
     //Bsp 1. Stückelungen, schaut nicht ob vorhanden
     public MoneyBoxContainer calculateSuggestedDenomination(PayoutRequest payoutRequest) {
         if (payoutRequest == null) {
-            out.printErrorMsg("");
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
 
@@ -114,7 +112,7 @@ public class Calculator {
             }
         }
         if (valueLeft > 0) {
-            System.out.println("BETERAG NICHT VORRÄTIG");
+            System.out.println("BETRAG NICHT VORRÄTIG");
         }
         return resultMoneyBoxContainer;
     }
@@ -143,14 +141,12 @@ public class Calculator {
                 return Currency.values()[i];
             }
         }
-        throw new IllegalArgumentException("Couldnt find currency " + c);       //TODO: Maybe instead return null?
+        throw new IllegalArgumentException("Couldnt find currency " + c);    //TODO: Maybe instead return null?
     }
-
 
     public MoneyBoxContainer getContainer() {
         return initialContainer;
     }
-
 
   // public boolean validateCurrency(Currency curr) {
   //       for (Currency c : currencies) {

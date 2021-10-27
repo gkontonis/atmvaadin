@@ -25,6 +25,7 @@ public class MoneyBoxContainer {
 
         for (MoneyBox moneyBox : boxes) {
             if (moneyBox.getValue() == box.getValue() && moneyBox.getType() == box.getType()) {
+                System.out.println("THIS SHIT HAPPENS!");
                 // mb.setAmount(mb.getAmount() + box.getAmount());
                 moneyBox = box;
                 return boxes;

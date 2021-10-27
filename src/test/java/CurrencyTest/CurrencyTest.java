@@ -1,4 +1,4 @@
-package CurrencyTest;
+/*package CurrencyTest;
 
 import org.assertj.core.api.Assertions;
 import org.testng.Assert;
@@ -89,4 +89,4 @@ public class CurrencyTest {
     public void test_currcalc_120Komma5B() {
         String testString = "120.5B";
     }
-}
+}*/
