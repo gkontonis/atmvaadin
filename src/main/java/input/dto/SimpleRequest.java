@@ -3,7 +3,7 @@ package input.dto;
 import backend.entity.Currency;
 import backend.entity.MoneyBox;
 
-public class PayoutRequest {
+public class SimpleRequest {
 
     private final Currency currency;
     private final int value;
@@ -12,7 +12,7 @@ public class PayoutRequest {
         return currencyValue >= 0;
     }
 
-    public PayoutRequest(Currency currency, int value) {
+    public SimpleRequest(Currency currency, int value) {
         validateCurrencyValue(value);
 
         this.currency = currency;
