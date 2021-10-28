@@ -10,6 +10,7 @@
 *.idea
 *.iml
 
+
 # Log file
 *.log
 
@@ -50,5 +51,20 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### own Excludes ###
+*out/*
+*.class
+*target/*
+*log*
+logs/*
+*.log
+.idea
+*node_modules/*
+package-lock.json
+package.json
+todo.txt
+webpack.config.js
+webpack.generated.js
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven
