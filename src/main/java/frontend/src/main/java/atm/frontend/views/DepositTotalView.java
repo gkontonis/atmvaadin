@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import frontend.src.main.java.atm.frontend.components.notifications.FancyNotification;
 
 
 @Route(value = "deposittotalview")
@@ -15,6 +16,7 @@ public class DepositTotalView extends VerticalLayout {
     public static final String VIEW_ID = "deposittotalview";
 
     private DepositViewController controller = new DepositViewController();
+    private FancyNotification fancyNotification = new FancyNotification();
 
     public DepositTotalView() {
         add(depositView());
@@ -24,7 +26,24 @@ public class DepositTotalView extends VerticalLayout {
         VerticalLayout depositView = new VerticalLayout();
         TextField inputfield = new TextField();
         Button confirmDepositButton = new Button("Einzahlen");
-        confirmDepositButton.addClickListener(buttonClickEvent -> controller.depositTotal(inputfield.getValue()));
+
+        confirmDepositButton.addClickListener(buttonClickEvent -> {
+            //if (!isValid()) {
+            //    //ThrowError
+            //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+            //    return;
+            //}
+            //TODO: Write Validator instead of try catch
+
+            try {
+                controller.depositTotal(inputfield.getValue());
+            } catch (IllegalArgumentException e) {
+                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+                return;
+            }
+            fancyNotification.showSuccessNotification("Betrag erfolgreich eingezahlt.", 3000);
+            UI.getCurrent().navigate(MainView.VIEW_ID);
+        });
 
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(DepositMenuView.VIEW_ID));
@@ -32,4 +51,8 @@ public class DepositTotalView extends VerticalLayout {
         depositView.add(inputfield, confirmDepositButton, backButton);
         return depositView;
     }
+
+   /* private boolean isValid() {
+        return true;
+    }*/
 }

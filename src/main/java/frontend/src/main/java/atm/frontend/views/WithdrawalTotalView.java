@@ -7,6 +7,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import frontend.src.main.java.atm.frontend.components.notifications.FancyNotification;
 
 @Route(value = WithdrawalTotalView.VIEW_ID)
 @PageTitle("Auszahlung")
@@ -14,6 +15,7 @@ public class WithdrawalTotalView extends VerticalLayout {
     public static final String VIEW_ID = "withdrawaltotalview";
 
     private WithdrawalViewController controller = new WithdrawalViewController();
+    private FancyNotification fancyNotification = new FancyNotification();
 
     public WithdrawalTotalView() {
         add(withdrawalTotalView());
@@ -23,12 +25,47 @@ public class WithdrawalTotalView extends VerticalLayout {
         VerticalLayout withdrawalView = new VerticalLayout();
         TextField inputfield = new TextField();
         Button confirmWithdrawalButton = new Button("Abheben");
-        confirmWithdrawalButton.addClickListener(buttonClickEvent -> controller.withdrawal(inputfield.getValue()));
+
+        confirmWithdrawalButton.addClickListener(buttonClickEvent -> {
+            //if (!isValid()) {
+            //    //ThrowError
+            //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+            //    return;
+            //}
+            //TODO: Write Validator instead of try catch
+
+            try {
+                controller.withdrawalTotal(inputfield.getValue());
+            } catch (IllegalArgumentException e) {
+                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+                return;
+            }
+
+            fancyNotification.showSuccessNotification("Betrag erfolgreich ausgezahlt.", 3000);
+            UI.getCurrent().navigate(MainView.VIEW_ID);
+        });
+
+        Button confirmWithdrawalButton2 = new Button("AbhebenGestück");
+
+        confirmWithdrawalButton2.addClickListener(buttonClickEvent -> {
+            try {
+                if (controller.withdrawDenominated(inputfield.getValue()) == null) {
+                    System.out.println("Value not found(probably)");
+                }
+            } catch (IllegalArgumentException e) {
+                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+                return;
+            }
+
+            fancyNotification.showSuccessNotification("Betrag erfolgreich ausgezahlt.", 3000);
+            UI.getCurrent().navigate(MainView.VIEW_ID);
+        });
+
 
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalMenuView.VIEW_ID));
 
-        withdrawalView.add(inputfield, confirmWithdrawalButton, backButton);
+        withdrawalView.add(inputfield, confirmWithdrawalButton, confirmWithdrawalButton2, backButton);
 
         return withdrawalView;
     }

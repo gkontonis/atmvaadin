@@ -8,9 +8,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
 //TODO: Sugar after it works @CssImport("\u202AC:\\Users\\02uz0408\\Desktop\\ATMVaadin\\src\\main\\java\\frontend\\frontend\\styles\\mainView.css")
-@Route
+@Route(value = MainView.VIEW_ID)
 @PWA(name = "My Application", shortName = "My Application")
 public class MainView extends VerticalLayout {
+
+    public static final String VIEW_ID = "";
+
 
     public MainView() {
         addClassName("mainView");
