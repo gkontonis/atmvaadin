@@ -1,28 +1,43 @@
 package business.src.main.java.atm.business.withdrawalView;
 
 import backend.calculator.Calculator;
+import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.PayoutRequest;
+import input.dto.ComplexRequest;
+import input.dto.SimpleRequest;
 
+//TODO: Replace all return nulls with exceptions(usually)
 public class WithdrawalViewController {
 
     private Calculator CALCULATOR = new Calculator();
     public static final int ASCII_OFFSET = 48;
 
-    public MoneyBoxContainer withdrawal(String input) {
-        CALCULATOR = new Calculator();
-        PayoutRequest payoutRequest = null;
-        payoutRequest = convert(input);
-        if (payoutRequest == null) {
+    public MoneyBoxContainer withdrawalTotal(String input) {
+        SimpleRequest simpleRequest = null;
+        simpleRequest = convert(input);
+        if (simpleRequest == null) {
             System.out.println("FEHLERHAFTE EINGABE\n");
         }
-        if (payoutRequest.getValue() > 10000000) {
+        if (simpleRequest.getValue() > 10000000) {
             System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
         }
-        return CALCULATOR.calculateAndWithdraw(payoutRequest);
+        return CALCULATOR.withdrawSimpleRequest(simpleRequest);
     }
 
-    public PayoutRequest convert(String input) {
+    public MoneyBoxContainer withdrawDenominated(String input) {
+        ComplexRequest complexRequest = null;
+
+        if (input.length() > 250) {
+            throw new IllegalArgumentException("Input is too long!");
+        }
+        complexRequest = convertToComplexRequest(input);
+        if (complexRequest == null) {
+            throw new IllegalStateException("Deposit Request must not be null!");
+        }
+        return CALCULATOR.withdraw(complexRequest);
+    }
+
+    public SimpleRequest convert(String input) {
         if (input == null) {
             return null;
         }
@@ -62,9 +77,81 @@ public class WithdrawalViewController {
             return null;
         }
 
-        return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
+        return new SimpleRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
 
+    private ComplexRequest convertToComplexRequest(String input) {
+        ComplexRequest complexRequest = new ComplexRequest();
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+        if (input.contains(".") || input.contains(",")) {
+            return null;
+        }
+        String[] inputStrings = input.split(" ");
+
+        for (String inputPart : inputStrings) {
+            char[] inputArray = inputPart.toCharArray();
+            MoneyBox mb = convertToSingleBox(inputArray);
+            if (mb == null) {
+                return null;
+            }
+            complexRequest.addMoneyBox(mb);
+        }
+        if (complexRequest.getMoneyBoxContainer().isEmpty()) {
+            return null;
+        }
+        return complexRequest;
+    }
+
+    //TODO Optimize
+    private MoneyBox convertToSingleBox(char[] source) {
+        int value = 0;
+        Character currencyChar = null;
+        int amount = 0;
+
+        if (!isNumber(source[0])) {
+            return null;
+        }
+        if (toNumber(source[0]) == 0) {
+            return null;
+        }
+
+        for (int i = 0; i < source.length; i++) {
+
+            char currentSign = source[i];
+            if (isNumber(currentSign) && currencyChar == null) {
+                value *= 10;
+                value += toNumber(currentSign);
+                continue;
+            }
+
+            if (currencyChar == null) {
+                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in PayoutInputReader
+                continue;
+            }
+            //same principle twice, maybe fix
+            if (isNumber(currentSign)) {
+                amount *= 10;
+                amount += toNumber(currentSign);
+                continue;
+            }
+
+            if (amount <= 0) {
+                return null;
+            }
+        }
+
+        if (currencyChar == null || amount == 0) {
+            return null;
+        }
+
+        return createMoneyBox(value, currencyChar, amount);
+    }
+
+    private MoneyBox createMoneyBox(int value, char currChar, int amount) {
+        return new MoneyBox(value, CALCULATOR.getCurrency(currChar), CALCULATOR.getType(value, currChar), amount);
+    }
 
     private int toNumber(char digit) {
         return digit - ASCII_OFFSET;
