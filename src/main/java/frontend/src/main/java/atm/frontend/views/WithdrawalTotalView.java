@@ -1,6 +1,8 @@
 package frontend.src.main.java.atm.frontend.views;
 
+import business.src.main.java.atm.business.statusView.StatusViewController;
 import business.src.main.java.atm.business.withdrawalView.WithdrawalViewController;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,6 +16,10 @@ import frontend.src.main.java.atm.frontend.components.notifications.FancyNotific
 public class WithdrawalTotalView extends VerticalLayout {
     public static final String VIEW_ID = "withdrawaltotalview";
 
+
+    private StatusViewController statusViewController = new StatusViewController();
+
+
     private WithdrawalViewController controller = new WithdrawalViewController();
     private FancyNotification fancyNotification = new FancyNotification();
 
@@ -23,6 +29,7 @@ public class WithdrawalTotalView extends VerticalLayout {
 
     private VerticalLayout withdrawalTotalView() {
         VerticalLayout withdrawalView = new VerticalLayout();
+        Text text = new Text(statusViewController.getStatus());
         TextField inputfield = new TextField();
         Button confirmWithdrawalButton = new Button("Abheben");
 
@@ -47,7 +54,7 @@ public class WithdrawalTotalView extends VerticalLayout {
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalMenuView.VIEW_ID));
 
-        withdrawalView.add(inputfield, confirmWithdrawalButton, backButton);
+        withdrawalView.add(text, inputfield, confirmWithdrawalButton, backButton);
 
         return withdrawalView;
     }
