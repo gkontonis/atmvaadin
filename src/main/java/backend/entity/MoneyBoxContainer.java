@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+
+//TODO: Replace all return nulls with exceptions(usually)
 public class MoneyBoxContainer {
     private static MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
     private Map<Currency, List<MoneyBox>> containerMap = new HashMap<>();
@@ -25,7 +27,7 @@ public class MoneyBoxContainer {
 
         for (MoneyBox moneyBox : boxes) {
             if (moneyBox.getValue() == box.getValue() && moneyBox.getType() == box.getType()) {
-                System.out.println("THIS SHIT HAPPENS!");
+                System.out.println("Box of equal value found");
                 // mb.setAmount(mb.getAmount() + box.getAmount());
                 moneyBox = box;
                 return boxes;
@@ -62,7 +64,7 @@ public class MoneyBoxContainer {
         }
     }
 
-    public MoneyBox withdraw(MoneyBox toWithdraw) {
+    public MoneyBox withdraw(MoneyBox toWithdraw) {     //TODO: Does this need to be public?
         if (toWithdraw == null) {
             throw new IllegalArgumentException("MoneyBox must not be null!");
         }
