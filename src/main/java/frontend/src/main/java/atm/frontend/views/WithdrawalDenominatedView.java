@@ -9,15 +9,15 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import frontend.src.main.java.atm.frontend.components.notifications.FancyNotification;
 
-@Route(value = WithdrawalDenominatedlView.VIEW_ID)
+@Route(value = WithdrawalDenominatedView.VIEW_ID)
 @PageTitle("Auszahlung")
-public class WithdrawalDenominatedlView extends VerticalLayout {
+public class WithdrawalDenominatedView extends VerticalLayout {
     public static final String VIEW_ID = "withdrawaldenominatedview";
 
     private WithdrawalViewController controller = new WithdrawalViewController();
     private FancyNotification fancyNotification = new FancyNotification();
 
-    public WithdrawalDenominatedlView() {
+    public WithdrawalDenominatedView() {
         add(withdrawalDenominatedView());
     }
 

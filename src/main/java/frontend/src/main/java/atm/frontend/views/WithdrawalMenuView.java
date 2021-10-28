@@ -28,7 +28,7 @@ public class WithdrawalMenuView extends VerticalLayout {
         Button backButton = new Button("Zurück");
 
         wholeValueButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalTotalView.VIEW_ID));
-        denominatedValueButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalDenominatedlView.VIEW_ID));
+        denominatedValueButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalDenominatedView.VIEW_ID));
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(""));
 
         withdrawalButtonLayout.add(wholeValueButton, denominatedValueButton, backButton);
