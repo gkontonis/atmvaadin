@@ -2,8 +2,7 @@ package input.reader;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
-import input.dto.DepositRequest;
-import input.dto.PayoutRequest;
+import input.dto.ComplexRequest;
 
 import java.util.Scanner;
 
@@ -13,12 +12,12 @@ public class DepositInputReader {
 
     public static final int ASCII_OFFSET = 48;
 
-    public DepositRequest getUserinput() {
+    public ComplexRequest getUserinput() {
         Scanner sc = new Scanner(System.in);
 
         boolean isUserInput = true;
 
-        DepositRequest depositRequest = null;
+        ComplexRequest complexRequest = null;
 
         do {
             System.out.println("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33) ");
@@ -31,8 +30,8 @@ public class DepositInputReader {
                 System.out.println("EINGABE ZU LANG");
                 return null;
             }
-            depositRequest = convert(input);
-            if (depositRequest == null) {
+            complexRequest = convert(input);
+            if (complexRequest == null) {
                 System.out.println("INTERNER FEHLER");
                 continue;
             }
@@ -41,11 +40,11 @@ public class DepositInputReader {
         }
         while (isUserInput);
 
-        return depositRequest;
+        return complexRequest;
     }
 
-    public DepositRequest convert(String input) {
-        DepositRequest depositResult = new DepositRequest();
+    public ComplexRequest convert(String input) {
+        ComplexRequest depositResult = new ComplexRequest();
         if (input == null || input.isEmpty()) {
             return null;
         }

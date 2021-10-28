@@ -2,36 +2,42 @@ package business.src.main.java.atm.business.depositView;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
-import input.dto.DepositRequest;
-import input.dto.PayoutRequest;
+import input.dto.ComplexRequest;
+import input.dto.SimpleRequest;
 
+//TODO: Replace all return nulls with exceptions(usually)
 public class DepositViewController {
 
     private final Calculator CALCULATOR = new Calculator();
     public static final int ASCII_OFFSET = 48;
 
-    public void deposit(String input) {
-        DepositRequest depositRequest = null;
+    public void depositDenominated(String input) {
+        ComplexRequest complexRequest = null;
 
         if (input.length() > 250) {
             throw new IllegalArgumentException("Input is too long!");
         }
-        depositRequest = convertToDepositRequest(input);
-        if (depositRequest == null) {
+        complexRequest = convertToComplexRequest(input);
+        if (complexRequest == null) {
             throw new IllegalStateException("Deposit Request must not be null!");
         }
-        CALCULATOR.deposit(depositRequest);
+        CALCULATOR.deposit(complexRequest);
     }
 
     public void depositTotal(String input) {
+        SimpleRequest simpleRequest = null;
         if (input.length() > 250) {
             throw new IllegalArgumentException("Input is too long!");
         }
-        CALCULATOR.deposit(CALCULATOR.calculateSuggestedDenomination(convertToPayoutrequest(input)));
+        simpleRequest = convertToSimpleRequest(input);
+        if (simpleRequest == null) {
+            throw new IllegalStateException("Deposit Request must not be null!");
+        }
+        CALCULATOR.depositSimpleRequest(simpleRequest);
     }
 
-    private DepositRequest convertToDepositRequest(String input) {
-        DepositRequest depositResult = new DepositRequest();
+    private ComplexRequest convertToComplexRequest(String input) {
+        ComplexRequest complexRequest = new ComplexRequest();
         if (input == null || input.isEmpty()) {
             return null;
         }
@@ -46,12 +52,12 @@ public class DepositViewController {
             if (mb == null) {
                 return null;
             }
-            depositResult.addMoneyBox(mb);
+            complexRequest.addMoneyBox(mb);
         }
-        if (depositResult.getMoneyBoxContainer().isEmpty()) {
+        if (complexRequest.getMoneyBoxContainer().isEmpty()) {
             return null;
         }
-        return depositResult;
+        return complexRequest;
     }
 
     //TODO Optimize
@@ -110,9 +116,8 @@ public class DepositViewController {
     private boolean isNumber(char digit) {
         return digit >= '0' && digit <= '9';
     }
-    //--------------------------------------------------------------------------------------------
 
-    public PayoutRequest convertToPayoutrequest(String input) {
+    public SimpleRequest convertToSimpleRequest(String input) {
         if (input == null) {
             return null;
         }
@@ -155,7 +160,7 @@ public class DepositViewController {
             System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
             return null;
         }
-        return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
+        return new SimpleRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
 
 }
