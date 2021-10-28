@@ -4,10 +4,8 @@ import backend.entity.Currency;
 import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.DepositRequest;
-import input.dto.PayoutRequest;
-import input.reader.DepositInputReader;
-import output.Output;
+import input.dto.ComplexRequest;
+import input.dto.SimpleRequest;
 
 import java.util.List;
 
@@ -38,8 +36,8 @@ public class Calculator {
     public Calculator(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null) {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
-           // System.out.println("INTERNER FEHLER");
-           // return;
+            // System.out.println("INTERNER FEHLER");
+            // return;
         }
         initialContainer = moneyBoxContainer;
     }
@@ -56,14 +54,14 @@ public class Calculator {
     }
 
     //Bsp 1. Stückelungen, schaut nicht ob vorhanden
-    public MoneyBoxContainer calculateSuggestedDenomination(PayoutRequest payoutRequest) {
-        if (payoutRequest == null) {
+    public MoneyBoxContainer calculateSuggestedDenomination(SimpleRequest simpleRequest) {
+        if (simpleRequest == null) {
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
 
-        Currency currency = payoutRequest.getCurrency();
+        Currency currency = simpleRequest.getCurrency();
         List<MoneyBox> boxes = initialContainer.get(currency);
-        int userRequestValue = payoutRequest.getValue();
+        int userRequestValue = simpleRequest.getValue();
 
         MoneyBoxContainer result = new MoneyBoxContainer();
 
@@ -78,23 +76,30 @@ public class Calculator {
         return result;
     }
 
+   public MoneyBoxContainer withdraw(ComplexRequest complexRequest) {
+       MoneyBoxContainer result = initialContainer.withdraw(complexRequest.getMoneyBoxContainer());
+       return result;
+   }
 
-    public MoneyBoxContainer calculateAndWithdraw(PayoutRequest payoutRequest) {
-        if (payoutRequest == null) {
+    public MoneyBoxContainer withdrawSimpleRequest(SimpleRequest simpleRequest) {
+        if (simpleRequest == null) {
             return null;
         }
-        MoneyBoxContainer result = initialContainer.withdraw(calculatePossibleWithdrawal(payoutRequest));
+        if (calculatePossibleWithdrawal(simpleRequest) == null){
+            return null;
+        }
+        MoneyBoxContainer result = initialContainer.withdraw(calculatePossibleWithdrawal(simpleRequest));
         return result;
     }
 
-    public MoneyBoxContainer calculatePossibleWithdrawal(PayoutRequest payoutRequest) {
-        if (payoutRequest == null) {
+    public MoneyBoxContainer calculatePossibleWithdrawal(SimpleRequest simpleRequest) {     //TODO: Should really be private
+        if (simpleRequest == null) {
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
 
-        Currency currency = payoutRequest.getCurrency();
+        Currency currency = simpleRequest.getCurrency();
         List<MoneyBox> boxes = initialContainer.get(currency);
-        int userRequestValue = payoutRequest.getValue();
+        int userRequestValue = simpleRequest.getValue();
 
         MoneyBoxContainer resultMoneyBoxContainer = new MoneyBoxContainer();
 
@@ -113,31 +118,35 @@ public class Calculator {
         }
         if (valueLeft > 0) {
             System.out.println("BETRAG NICHT VORRÄTIG");
+            return null;
         }
         return resultMoneyBoxContainer;
     }
 
-    public MoneyBoxContainer deposit(DepositRequest depositRequest) {
-        if (depositRequest == null) {
+    public MoneyBoxContainer deposit(ComplexRequest complexRequest) {
+        if (complexRequest == null) {
             throw new IllegalArgumentException("Deposit Request must not be null!");
 
         }
-        initialContainer.depositContainer(depositRequest.getMoneyBoxContainer());
+        initialContainer.depositContainer(complexRequest.getMoneyBoxContainer());
         return initialContainer;
     }
 
-    public MoneyBoxContainer deposit(MoneyBoxContainer moneyBoxContainer) {
+    public MoneyBoxContainer depositSimpleRequest(SimpleRequest request){
+        return depositContainer(calculateSuggestedDenomination(request));
+    }
+
+    private MoneyBoxContainer depositContainer(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null) {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
-
         }
         initialContainer.depositContainer(moneyBoxContainer);
         return initialContainer;
     }
 
     public Currency getCurrency(char c) {
-        for (int i = 0; i < Currency.values().length; i++){
-            if (String.valueOf(c).equals(Currency.values()[i].name())){
+        for (int i = 0; i < Currency.values().length; i++) {
+            if (String.valueOf(c).equals(Currency.values()[i].name())) {
                 return Currency.values()[i];
             }
         }
@@ -148,13 +157,13 @@ public class Calculator {
         return initialContainer;
     }
 
-  // public boolean validateCurrency(Currency curr) {
-  //       for (Currency c : currencies) {
-  //          if (c.equals(curr)) {
-  //              return true;
-  //          }
-  //      }
-  //      System.out.println("Currency is invalid");
-  //      return false;
-  //  }
+    // public boolean validateCurrency(Currency curr) {
+    //       for (Currency c : currencies) {
+    //          if (c.equals(curr)) {
+    //              return true;
+    //          }
+    //      }
+    //      System.out.println("Currency is invalid");
+    //      return false;
+    //  }
 }
