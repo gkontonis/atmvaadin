@@ -72,7 +72,7 @@ public class MainMenu {
 
         switch (input) {
             case "1":
-                calc.deposit(calc.calculateSuggestedDenomination(po.getUserinput())); //TODO: currently calls PayoutInput reader. Fix
+                calc.depositSimpleRequest(po.getUserinput()); //TODO: currently calls PayoutInput reader. Fix
                 break;
             case "2":
                 calc.deposit(dp.getUserinput());
@@ -101,7 +101,7 @@ public class MainMenu {
 
         switch (input) {
             case "1":
-                printer.printContainer(calc.calculateAndWithdraw(po.getUserinput()));
+                printer.printContainer(calc.withdrawSimpleRequest(po.getUserinput()));
                 break;
             case "2":
                 System.out.println("Not yet implemented");

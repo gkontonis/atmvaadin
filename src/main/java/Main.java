@@ -1,8 +1,8 @@
 import backend.calculator.Calculator;
-import input.dto.DepositRequest;
+import input.dto.ComplexRequest;
 import input.reader.DepositInputReader;
 import input.reader.PayoutInputReader;
-import input.dto.PayoutRequest;
+import input.dto.SimpleRequest;
 import output.MainMenu;
 import output.Output;
 
@@ -18,7 +18,7 @@ public class Main {
     }
 
     private void run() {
-        PayoutRequest request = INPUT_READER.getUserinput();
+        SimpleRequest request = INPUT_READER.getUserinput();
         while (request != null) {
             output.printContainer(calc.calculateSuggestedDenomination(request));
             request = INPUT_READER.getUserinput();
@@ -26,7 +26,7 @@ public class Main {
     }
 
    private void run2() {
-       DepositRequest request = DEPOSIT_INPUT_READER.getUserinput();
+       ComplexRequest request = DEPOSIT_INPUT_READER.getUserinput();
        while (request != null) {
            output.printContainer(calc.deposit(request));
            request = DEPOSIT_INPUT_READER.getUserinput();
@@ -34,9 +34,9 @@ public class Main {
    }
 
     private void run3() {
-        PayoutRequest request = INPUT_READER.getUserinput();
+        SimpleRequest request = INPUT_READER.getUserinput();
         while (request != null) {
-            output.printContainer(calc.calculateAndWithdraw(request));
+            output.printContainer(calc.withdrawSimpleRequest(request));
             request = INPUT_READER.getUserinput();
         }
     }
