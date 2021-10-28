@@ -90,7 +90,7 @@ public class DepositInputReader {
             }
 
             if (currencyChar == null) {
-                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in PayoutInputReader
+                currencyChar = currentSign;
                 continue;
             }
             //same principle twice, maybe fix

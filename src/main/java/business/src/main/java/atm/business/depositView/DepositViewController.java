@@ -74,7 +74,6 @@ public class DepositViewController {
         }
 
         for (int i = 0; i < source.length; i++) {
-
             char currentSign = source[i];
             if (isNumber(currentSign) && currencyChar == null) {
                 value *= 10;
@@ -83,7 +82,7 @@ public class DepositViewController {
             }
 
             if (currencyChar == null) {
-                currencyChar = currentSign; //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in PayoutInputReader
+                currencyChar = currentSign;
                 continue;
             }
             //same principle twice, maybe fix
@@ -149,7 +148,7 @@ public class DepositViewController {
                 continue;
             }
 
-            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in DepositInputReader
+            currencyChar = currentSign;
             break;
         }
 

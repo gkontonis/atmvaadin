@@ -33,12 +33,11 @@ public class DepositDenominatedView extends VerticalLayout {
             //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
             //    return;
             //}
-            //TODO: Write Validator instead of try catch
 
             try {
                 controller.depositDenominated(inputfield.getValue());
             } catch (IllegalArgumentException e) {
-                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);    //TODO: Print stacktrace once Return Nulls are all replaced by exceptions
                 return;
             }
             fancyNotification.showSuccessNotification("Betrag erfolgreich eingezahlt.", 3000);

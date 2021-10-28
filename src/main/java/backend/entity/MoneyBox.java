@@ -1,8 +1,6 @@
 package backend.entity;
 
 public class MoneyBox {
-    //public enum Currency {A, B} //TODO: Add a doesCurrencyExist() method.
-    //public enum CurrencyType {COIN, NOTE}
 
     private int value;
     private Currency currency;

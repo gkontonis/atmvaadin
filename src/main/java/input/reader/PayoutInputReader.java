@@ -73,7 +73,7 @@ public class PayoutInputReader {
                 continue;
             }
 
-            currencyChar = currentSign;     //TODO: Check if valid currency? Add validator in Calculator or MoneyBox - NOTE: Same TODO in DepositInputReader
+            currencyChar = currentSign;
             break;
         }
 

@@ -33,7 +33,6 @@ public class MainMenu {
                 return;
             }
 
-            //TODO: -> Ifs to switchCase -> in all menus
             switch (input) {
                 case "1":
                     showDepositMenu();
@@ -72,7 +71,7 @@ public class MainMenu {
 
         switch (input) {
             case "1":
-                calc.depositSimpleRequest(po.getUserinput()); //TODO: currently calls PayoutInput reader. Fix
+                calc.depositSimpleRequest(po.getUserinput());
                 break;
             case "2":
                 calc.deposit(dp.getUserinput());
@@ -85,7 +84,6 @@ public class MainMenu {
     }
 
     private void showWithdrawalMenu() {
-        //TODO: Auszahlen Gestückelt
         PayoutInputReader po = new PayoutInputReader();
         System.out.println("1) Gesamtbetrag");
         System.out.println("2) Gestückelt");

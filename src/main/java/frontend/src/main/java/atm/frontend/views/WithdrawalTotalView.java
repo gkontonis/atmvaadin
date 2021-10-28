@@ -32,40 +32,22 @@ public class WithdrawalTotalView extends VerticalLayout {
             //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
             //    return;
             //}
-            //TODO: Write Validator instead of try catch
 
             try {
                 controller.withdrawalTotal(inputfield.getValue());
             } catch (IllegalArgumentException e) {
-                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
+                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);    //TODO: Print stacktrace once Return Nulls are all replaced by exceptions
                 return;
             }
 
             fancyNotification.showSuccessNotification("Betrag erfolgreich ausgezahlt.", 3000);
             UI.getCurrent().navigate(MainView.VIEW_ID);
         });
-
-        Button confirmWithdrawalButton2 = new Button("AbhebenGestück");
-
-        confirmWithdrawalButton2.addClickListener(buttonClickEvent -> {
-            try {
-                if (controller.withdrawDenominated(inputfield.getValue()) == null) {
-                    System.out.println("Value not found(probably)");
-                }
-            } catch (IllegalArgumentException e) {
-                fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
-                return;
-            }
-
-            fancyNotification.showSuccessNotification("Betrag erfolgreich ausgezahlt.", 3000);
-            UI.getCurrent().navigate(MainView.VIEW_ID);
-        });
-
 
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalMenuView.VIEW_ID));
 
-        withdrawalView.add(inputfield, confirmWithdrawalButton, confirmWithdrawalButton2, backButton);
+        withdrawalView.add(inputfield, confirmWithdrawalButton, backButton);
 
         return withdrawalView;
     }

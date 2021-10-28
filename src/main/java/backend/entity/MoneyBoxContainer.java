@@ -7,15 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 //TODO: Replace all return nulls with exceptions(usually)
 public class MoneyBoxContainer {
     private static MoneyBoxDecendingComperator moneyBoxDecendingComperator = new MoneyBoxDecendingComperator();
     private Map<Currency, List<MoneyBox>> containerMap = new HashMap<>();
 
-
     public List<MoneyBox> put(MoneyBox box) {
-
         if (box == null) {
             throw new IllegalArgumentException("Passed Box must not be null!");
         }
@@ -47,7 +44,6 @@ public class MoneyBoxContainer {
         return result;
     }
 
-    //TODO: MAYBE MAP NOT SORTED & POSSIBLY ADD NEW METHOD TO RETURN List<List<MoneyBox>> which is sorted
     public Map<Currency, List<MoneyBox>> getMap() {
         return containerMap;
     }
