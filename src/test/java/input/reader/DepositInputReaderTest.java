@@ -3,11 +3,9 @@ package input.reader;
 import backend.entity.Currency;
 import backend.entity.CurrencyType;
 import backend.entity.MoneyBox;
-import input.dto.DepositRequest;
+import input.dto.ComplexRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 public class DepositInputReaderTest {
 
@@ -69,9 +67,9 @@ public class DepositInputReaderTest {
     @Test
     public void testTestConvert_It_returns_valid_depositResult() {
         DepositInputReader depositInputReader = new DepositInputReader();
-        DepositRequest expected = new DepositRequest();
+        ComplexRequest expected = new ComplexRequest();
         expected.addMoneyBox(new MoneyBox(20, Currency.A, CurrencyType.NOTE, 10));
-        DepositRequest actual = depositInputReader.convert("20A10");
+        ComplexRequest actual = depositInputReader.convert("20A10");
         Assert.assertTrue(expected.getMoneyBoxContainer().contains(actual.getMoneyBoxContainer().get(Currency.A).get(0)));
     }
 

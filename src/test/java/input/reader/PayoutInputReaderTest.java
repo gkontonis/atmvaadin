@@ -1,7 +1,6 @@
 package input.reader;
 
-import input.dto.PayoutRequestTest;
-import input.dto.PayoutRequest;
+import input.dto.SimpleRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -63,21 +62,21 @@ public class PayoutInputReaderTest {
     @Test
     public void testConvert_It_returns_userRequest_when_number_and_Currencypart_are_valid(){
         PayoutInputReader inputReader = new PayoutInputReader();
-        PayoutRequest result = inputReader.convert("1234A");
+        SimpleRequest result = inputReader.convert("1234A");
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testConvert_It_returns_userRequest_even_with_leading_spaces_when_number_and_currencypart_are_valid(){
         PayoutInputReader inputReader = new PayoutInputReader();
-        PayoutRequest result = inputReader.convert("    1234A");
+        SimpleRequest result = inputReader.convert("    1234A");
         Assert.assertNotNull(result);
     }
 
     @Test
     public void testConvert_It_returns_userRequest_when_firest_sign_of_currencypart_is_valid_currency(){
         PayoutInputReader inputReader = new PayoutInputReader();
-        PayoutRequest result = inputReader.convert("1234Afoo");
+        SimpleRequest result = inputReader.convert("1234Afoo");
         Assert.assertNotNull(result);
     }
 
