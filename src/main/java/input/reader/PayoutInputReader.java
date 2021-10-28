@@ -1,7 +1,7 @@
 package input.reader;
 
 import backend.calculator.Calculator;
-import input.dto.PayoutRequest;
+import input.dto.SimpleRequest;
 
 import java.util.Scanner;
 
@@ -10,12 +10,12 @@ public class PayoutInputReader {
 
     public static final int ASCII_OFFSET = 48;
 
-    public PayoutRequest getUserinput() {
+    public SimpleRequest getUserinput() {
         Scanner sc = new Scanner(System.in);
 
         boolean isUserInput = true;
 
-        PayoutRequest payoutRequest = null;
+        SimpleRequest simpleRequest = null;
 
         do {
             System.out.println("Bitte den Betrag & Währung A/B eingeben (z.B. 1234A) den Sie eingeben wollen: "); //VAR B
@@ -24,13 +24,13 @@ public class PayoutInputReader {
             //     return null;
             // }
 
-            payoutRequest = convert(input);
+            simpleRequest = convert(input);
 
-            if (payoutRequest == null) {
+            if (simpleRequest == null) {
                 System.out.println("FEHLERHAFTE EINGABE\n");
                 return null;
             }
-            if (payoutRequest.getValue() > 10000000) {
+            if (simpleRequest.getValue() > 10000000) {
                 System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
                 return null;
             }
@@ -38,10 +38,10 @@ public class PayoutInputReader {
         }
         while (isUserInput);
 
-        return payoutRequest;
+        return simpleRequest;
     }
 
-    public PayoutRequest convert(String input) {
+    public SimpleRequest convert(String input) {
         if (input == null) {
             return null;
         }
@@ -81,7 +81,7 @@ public class PayoutInputReader {
             return null;
         }
 
-        return new PayoutRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
+        return new SimpleRequest(CALCULATOR.getCurrency(currencyChar), numberPart);
     }
 
     private int toNumber(char digit) {
