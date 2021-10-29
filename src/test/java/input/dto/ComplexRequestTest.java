@@ -1,8 +1,9 @@
 package input.dto;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
+import business.src.main.java.atm.business.requests.ComplexRequest;
 import org.testng.annotations.Test;
 
 public class ComplexRequestTest {

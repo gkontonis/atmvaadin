@@ -1,8 +1,8 @@
 package business.src.main.java.atm.business.statusView;
 
 import backend.calculator.Calculator;
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 
 import java.util.List;

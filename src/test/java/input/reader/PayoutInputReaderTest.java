@@ -1,6 +1,6 @@
 package input.reader;
 
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

@@ -1,11 +1,11 @@
 package backend.calculator;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.ComplexRequest;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 
 import java.util.List;
 
@@ -36,13 +36,10 @@ public class Calculator {
     public Calculator(MoneyBoxContainer moneyBoxContainer) {
         if (moneyBoxContainer == null) {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
-            // System.out.println("INTERNER FEHLER");
-            // return;
         }
         initialContainer = moneyBoxContainer;
     }
 
-    //GetTypeMethod should maybe be somewhere else
     public CurrencyType getType(int value, char currencyChar) {
         Currency currency = getCurrency(currencyChar);
         for (MoneyBox mb : initialContainer.get(currency)) {
@@ -53,12 +50,10 @@ public class Calculator {
         return null;
     }
 
-    //Bsp 1. Stückelungen, schaut nicht ob vorhanden
     public MoneyBoxContainer calculateSuggestedDenomination(SimpleRequest simpleRequest) {
         if (simpleRequest == null) {
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
-
         Currency currency = simpleRequest.getCurrency();
         List<MoneyBox> boxes = initialContainer.get(currency);
         int userRequestValue = simpleRequest.getValue();
@@ -76,16 +71,16 @@ public class Calculator {
         return result;
     }
 
-   public MoneyBoxContainer withdraw(ComplexRequest complexRequest) {
-       MoneyBoxContainer result = initialContainer.withdraw(complexRequest.getMoneyBoxContainer());
-       return result;
-   }
+    public MoneyBoxContainer withdraw(ComplexRequest complexRequest) {
+        MoneyBoxContainer result = initialContainer.withdraw(complexRequest.getMoneyBoxContainer());
+        return result;
+    }
 
     public MoneyBoxContainer withdrawSimpleRequest(SimpleRequest simpleRequest) {
         if (simpleRequest == null) {
             return null;
         }
-        if (calculatePossibleWithdrawal(simpleRequest) == null){
+        if (calculatePossibleWithdrawal(simpleRequest) == null) {
             return null;
         }
         MoneyBoxContainer result = initialContainer.withdraw(calculatePossibleWithdrawal(simpleRequest));
@@ -97,11 +92,12 @@ public class Calculator {
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
 
-        Currency currency = simpleRequest.getCurrency();
-        List<MoneyBox> boxes = initialContainer.get(currency);
-        int userRequestValue = simpleRequest.getValue();
-
         MoneyBoxContainer resultMoneyBoxContainer = new MoneyBoxContainer();
+
+        Currency currency = simpleRequest.getCurrency();
+        int userRequestValue = simpleRequest.getValue();
+        List<MoneyBox> boxes = initialContainer.get(currency);
+
 
         int valueLeft = userRequestValue;
 
@@ -123,16 +119,14 @@ public class Calculator {
         return resultMoneyBoxContainer;
     }
 
-    public MoneyBoxContainer deposit(ComplexRequest complexRequest) {
+    public MoneyBoxContainer depositComplexRequest(ComplexRequest complexRequest) {
         if (complexRequest == null) {
             throw new IllegalArgumentException("Deposit Request must not be null!");
-
         }
-        initialContainer.depositContainer(complexRequest.getMoneyBoxContainer());
-        return initialContainer;
+        return depositContainer(complexRequest.getMoneyBoxContainer());
     }
 
-    public MoneyBoxContainer depositSimpleRequest(SimpleRequest request){
+    public MoneyBoxContainer depositSimpleRequest(SimpleRequest request) {
         return depositContainer(calculateSuggestedDenomination(request));
     }
 
@@ -141,7 +135,7 @@ public class Calculator {
             throw new IllegalArgumentException("MoneyBoxContainer must not be null!");
         }
         initialContainer.depositContainer(moneyBoxContainer);
-        return initialContainer;
+        return initialContainer;    //TODO: Return copy of initial container
     }
 
     public Currency getCurrency(char c) {
@@ -150,20 +144,11 @@ public class Calculator {
                 return Currency.values()[i];
             }
         }
-        throw new IllegalArgumentException("Couldnt find currency " + c);    //TODO: Maybe instead return null?
+        throw new IllegalArgumentException("Couldnt find currency " + c);
     }
 
     public MoneyBoxContainer getContainer() {
         return initialContainer;
-    }
+    } //TODO: Return copy of initial container
 
-    // public boolean validateCurrency(Currency curr) {
-    //       for (Currency c : currencies) {
-    //          if (c.equals(curr)) {
-    //              return true;
-    //          }
-    //      }
-    //      System.out.println("Currency is invalid");
-    //      return false;
-    //  }
 }

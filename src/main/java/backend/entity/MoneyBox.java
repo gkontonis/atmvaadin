@@ -1,5 +1,8 @@
 package backend.entity;
 
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
+
 public class MoneyBox {
 
     private int value;
@@ -106,6 +109,4 @@ public class MoneyBox {
             throw new IllegalArgumentException("Cannot add " + amount + " pieces. Only possible: " + (Integer.MAX_VALUE - this.amount));
         }
     }
-
-
 }

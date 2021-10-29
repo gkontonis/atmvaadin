@@ -1,6 +1,7 @@
 package backend.entity;
 
 import backend.comperator.MoneyBoxDecendingComperator;
+import backend.enums.Currency;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ public class MoneyBoxContainer {
         if (box == null) {
             throw new IllegalArgumentException("Passed Box must not be null!");
         }
+
         List<MoneyBox> boxes = containerMap.get(box.getCurrency());
         if (boxes == null) {
             boxes = new LinkedList<>();
@@ -27,6 +29,9 @@ public class MoneyBoxContainer {
                 System.out.println("Box of equal value found");
                 // mb.setAmount(mb.getAmount() + box.getAmount());
                 moneyBox = box;
+
+                /*boxes.remove(moneyBox);
+                boxes.add(box);*/
                 return boxes;
             }
         }
@@ -37,7 +42,6 @@ public class MoneyBoxContainer {
     public List<MoneyBox> get(Currency currency) {
         List<MoneyBox> result = containerMap.get(currency);
         if (result == null) {
-            //throw new IllegalArgumentException("Passed Currency " + currency + " was not found");
             throw new IllegalArgumentException("WÄHRUNG: " + currency + "NICHT GEFUNDEN ");
         }
         result.sort(moneyBoxDecendingComperator);
@@ -58,6 +62,25 @@ public class MoneyBoxContainer {
                 this.deposit(box);
             }
         }
+    }
+
+    public void deposit(MoneyBox moneyBox) {
+        if (moneyBox == null) {
+            throw new IllegalArgumentException("Passed Box must not be null!");
+        }
+        List<MoneyBox> boxes = containerMap.get(moneyBox.getCurrency());
+        if (boxes == null || boxes.isEmpty()) {
+            boxes = new LinkedList<>();
+            containerMap.put(moneyBox.getCurrency(), boxes);
+        }
+
+        for (MoneyBox box : containerMap.get(moneyBox.getCurrency())) {
+            if (box.getValue() == moneyBox.getValue() && box.getType() == moneyBox.getType()) {
+                box.setAmount(box.getAmount() + moneyBox.getAmount());
+                return;
+            }
+        }
+        boxes.add(moneyBox);
     }
 
     public MoneyBox withdraw(MoneyBox toWithdraw) {     //TODO: Does this need to be public?
@@ -101,10 +124,6 @@ public class MoneyBoxContainer {
         return -1;
     }
 
-    public boolean contains(MoneyBox mb) {
-        return getIndex(mb) != -1;
-    }
-
     public boolean containsAmount(MoneyBox toFind) {
         if (contains(toFind)) {
             return get(toFind.getCurrency()).get(getIndex(toFind)).getAmount() >= toFind.getAmount();
@@ -112,27 +131,12 @@ public class MoneyBoxContainer {
         return false;
     }
 
-    public boolean isEmpty() {
-        return containerMap.isEmpty();
+    public boolean contains(MoneyBox mb) {
+        return getIndex(mb) != -1;
     }
 
-    public void deposit(MoneyBox moneyBox) {
-        if (moneyBox == null) {
-            throw new IllegalArgumentException("Passed Box must not be null!");
-        }
-        List<MoneyBox> boxes = containerMap.get(moneyBox.getCurrency());
-        if (boxes == null || boxes.isEmpty()) {
-            boxes = new LinkedList<>();
-            containerMap.put(moneyBox.getCurrency(), boxes);
-        }
-
-        for (MoneyBox box : containerMap.get(moneyBox.getCurrency())) {
-            if (box.getValue() == moneyBox.getValue() && box.getType() == moneyBox.getType()) {
-                box.setAmount(box.getAmount() + moneyBox.getAmount());
-                return;
-            }
-        }
-        boxes.add(moneyBox);
+    public boolean isEmpty() {
+        return containerMap.isEmpty();
     }
 
 }

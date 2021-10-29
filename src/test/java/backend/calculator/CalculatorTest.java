@@ -1,11 +1,11 @@
 package backend.calculator;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.ComplexRequest;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -72,7 +72,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
         ComplexRequest complexRequest = new ComplexRequest();
         complexRequest.addMoneyBox(new MoneyBox(100, Currency.A, CurrencyType.NOTE, 3));
-        calculator.deposit(complexRequest);
+        calculator.depositComplexRequest(complexRequest);
 
         SimpleRequest simpleRequest = new SimpleRequest(Currency.A, 300);
         MoneyBoxContainer results = calculator.calculatePossibleWithdrawal(simpleRequest);
@@ -85,7 +85,7 @@ public class CalculatorTest {
         Calculator calculator = new Calculator();
         ComplexRequest complexRequest = new ComplexRequest();
         complexRequest.addMoneyBox(new MoneyBox(100, Currency.A, CurrencyType.NOTE, 2));
-        calculator.deposit(complexRequest);
+        calculator.depositComplexRequest(complexRequest);
 
         SimpleRequest simpleRequest = new SimpleRequest(Currency.A, 300);
         MoneyBoxContainer results = calculator.calculatePossibleWithdrawal(simpleRequest);
@@ -98,7 +98,7 @@ public class CalculatorTest {
     public void testDeposit_It_is_Invalid_when_deposit_is_null() {
         Calculator calculator = new Calculator();
         ComplexRequest complexRequest = null;
-        calculator.deposit(complexRequest);
+        calculator.depositComplexRequest(complexRequest);
         Assert.assertNotNull(complexRequest);
     }
 

@@ -2,14 +2,13 @@ package input.reader;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
-import input.dto.ComplexRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
 
 import java.util.Scanner;
 
+@Deprecated
 public class DepositInputReader {
-
     private final Calculator CALCULATOR = new Calculator();
-
     public static final int ASCII_OFFSET = 48;
 
     public ComplexRequest getUserinput() {
@@ -48,7 +47,7 @@ public class DepositInputReader {
         if (input == null || input.isEmpty()) {
             return null;
         }
-        if(input.contains(".") || input.contains(",")){
+        if (input.contains(".") || input.contains(",")) {
             return null;
         }
         String[] inputStrings = input.split(" ");
@@ -125,3 +124,4 @@ public class DepositInputReader {
     }
 
 }
+

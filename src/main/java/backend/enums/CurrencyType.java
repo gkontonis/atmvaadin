@@ -1,4 +1,4 @@
-package backend.entity;
+package backend.enums;
 
 public enum CurrencyType {
     COIN,

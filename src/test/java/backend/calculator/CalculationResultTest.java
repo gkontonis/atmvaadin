@@ -1,11 +1,12 @@
 package backend.calculator;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+@Deprecated
 public class CalculationResultTest {
 
     @Test

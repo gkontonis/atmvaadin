@@ -1,10 +1,11 @@
 package input.reader;
 
 import backend.calculator.Calculator;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 
 import java.util.Scanner;
 
+@Deprecated
 public class PayoutInputReader {
     private final Calculator CALCULATOR = new Calculator();
 

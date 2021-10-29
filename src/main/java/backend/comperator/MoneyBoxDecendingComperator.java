@@ -1,6 +1,6 @@
 package backend.comperator;
 
-import backend.entity.CurrencyType;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 
 import java.util.Comparator;
@@ -20,24 +20,15 @@ public class MoneyBoxDecendingComperator implements Comparator<MoneyBox> {
     public static final int SMALLER = -1;
 
     @Override
-    public int compare(MoneyBox o1, MoneyBox o2) {
-      // if (o1.getType() == MoneyBox.CurrencyType.NOTE && o2.getType() == MoneyBox.CurrencyType.COIN) {
-      //     return GREATER;
-      // }
-
-      // if (o1.getType() == MoneyBox.CurrencyType.COIN && o2.getType() == MoneyBox.CurrencyType.NOTE) {
-      //     return SMALLER;
-      // }
-      // return normResult(o1.getValue() - o2.getValue());
-
-        if (o1.getType() == CurrencyType.NOTE && o2.getType() == CurrencyType.COIN) {
+    public int compare(MoneyBox box1, MoneyBox box2) {
+        if (box1.getType() == CurrencyType.NOTE && box2.getType() == CurrencyType.COIN) {
             return SMALLER;
         }
 
-        if (o1.getType() == CurrencyType.COIN && o2.getType() == CurrencyType.NOTE) {
+        if (box1.getType() == CurrencyType.COIN && box2.getType() == CurrencyType.NOTE) {
             return GREATER;
         }
-        return normResult(o1.getValue() - o2.getValue());
+        return normResult(box1.getValue() - box2.getValue());
 
     }
 

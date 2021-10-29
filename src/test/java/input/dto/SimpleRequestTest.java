@@ -1,6 +1,7 @@
 package input.dto;
 
-import backend.entity.Currency;
+import backend.enums.Currency;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

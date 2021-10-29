@@ -1,7 +1,6 @@
-package input.dto;
+package business.src.main.java.atm.business.requests;
 
-import backend.entity.Currency;
-import backend.entity.MoneyBox;
+import backend.enums.Currency;
 
 public class SimpleRequest {
 

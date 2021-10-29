@@ -1,6 +1,6 @@
 package backend.comperator;
 
-import backend.entity.CurrencyType;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 
 import java.util.Comparator;

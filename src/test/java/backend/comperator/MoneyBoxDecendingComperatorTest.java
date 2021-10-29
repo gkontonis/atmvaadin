@@ -1,8 +1,7 @@
 package backend.comperator;
 
-import backend.comperator.MoneyBoxDecendingComperator;
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 import org.testng.Assert;
 import org.testng.annotations.Test;

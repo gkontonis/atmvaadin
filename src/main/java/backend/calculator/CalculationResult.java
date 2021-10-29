@@ -1,8 +1,10 @@
 package backend.calculator;
 
-import backend.entity.Currency;
+import backend.enums.Currency;
 import backend.entity.MoneyBox;
 
+
+@Deprecated
 public class CalculationResult {
     private int amount;
     private MoneyBox box;

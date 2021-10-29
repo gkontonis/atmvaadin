@@ -3,9 +3,9 @@ package output;
 import backend.calculator.Calculator;
 import input.reader.DepositInputReader;
 import input.reader.PayoutInputReader;
-
 import java.util.Scanner;
 
+@Deprecated
 public class MainMenu {
     public MainMenu(Calculator calc) {
         this.calc = calc;
@@ -25,7 +25,6 @@ public class MainMenu {
             System.out.println("4) Beenden");
             System.out.print("> ");
             String input = sc.nextLine();
-
 
             if (input.length() < 0) {
                 System.out.println("FEHLERHAFTE EINGABE\n");
@@ -74,7 +73,7 @@ public class MainMenu {
                 calc.depositSimpleRequest(po.getUserinput());
                 break;
             case "2":
-                calc.deposit(dp.getUserinput());
+                calc.depositComplexRequest(dp.getUserinput());
                 break;
             case "3":
                 return;
@@ -112,6 +111,6 @@ public class MainMenu {
         }
     }
     private void showStatus() {
-        printer.printContainerB(calc.getContainer());
+        printer.printContainerWerner(calc.getContainer());
     }
 }

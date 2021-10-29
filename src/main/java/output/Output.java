@@ -1,12 +1,13 @@
 package output;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
 
 import java.util.List;
 
+@Deprecated
 public class Output {
     //Karlis
     public void printContainer(MoneyBoxContainer moneyBoxContainer) {
@@ -39,7 +40,7 @@ public class Output {
         }
     }
     //werners
-    public void printContainerB(MoneyBoxContainer moneyBoxContainer) {
+    public void printContainerWerner(MoneyBoxContainer moneyBoxContainer) {
         String output;
         CurrencyType currencyType;
 

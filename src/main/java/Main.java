@@ -1,8 +1,8 @@
 import backend.calculator.Calculator;
-import input.dto.ComplexRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
 import input.reader.DepositInputReader;
 import input.reader.PayoutInputReader;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 import output.MainMenu;
 import output.Output;
 
@@ -28,7 +28,7 @@ public class Main {
    private void run2() {
        ComplexRequest request = DEPOSIT_INPUT_READER.getUserinput();
        while (request != null) {
-           output.printContainer(calc.deposit(request));
+           output.printContainer(calc.depositComplexRequest(request));
            request = DEPOSIT_INPUT_READER.getUserinput();
        }
    }
@@ -42,7 +42,7 @@ public class Main {
     }
 
     private void run4(){
-        output.printContainerB(calc.getContainer());
+        output.printContainerWerner(calc.getContainer());
     }
 
     private void run5(){

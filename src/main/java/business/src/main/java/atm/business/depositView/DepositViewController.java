@@ -2,8 +2,8 @@ package business.src.main.java.atm.business.depositView;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
-import input.dto.ComplexRequest;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 
 //TODO: Replace all return nulls with exceptions(usually)
 public class DepositViewController {
@@ -21,7 +21,7 @@ public class DepositViewController {
         if (complexRequest == null) {
             throw new IllegalStateException("Deposit Request must not be null!");
         }
-        CALCULATOR.deposit(complexRequest);
+        CALCULATOR.depositComplexRequest(complexRequest);
     }
 
     public void depositTotal(String input) {

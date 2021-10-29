@@ -1,4 +1,4 @@
-package input.dto;
+package business.src.main.java.atm.business.requests;
 
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;

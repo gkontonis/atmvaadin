@@ -1,9 +1,9 @@
 package input.reader;
 
-import backend.entity.Currency;
-import backend.entity.CurrencyType;
+import backend.enums.Currency;
+import backend.enums.CurrencyType;
 import backend.entity.MoneyBox;
-import input.dto.ComplexRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

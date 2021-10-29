@@ -3,8 +3,8 @@ package business.src.main.java.atm.business.withdrawalView;
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxContainer;
-import input.dto.ComplexRequest;
-import input.dto.SimpleRequest;
+import business.src.main.java.atm.business.requests.ComplexRequest;
+import business.src.main.java.atm.business.requests.SimpleRequest;
 
 //TODO: Replace all return nulls with exceptions(usually)
 public class WithdrawalViewController {
