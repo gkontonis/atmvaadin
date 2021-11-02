@@ -1,4 +1,4 @@
-package business.src.main.java.atm.business.withdrawalView;
+package business.src.main.java.atm.business.withdrawalview;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
@@ -15,12 +15,14 @@ public class WithdrawalViewController {
     public MoneyBoxContainer withdrawalTotal(String input) {
         SimpleRequest simpleRequest = null;
         simpleRequest = convert(input);
+
         if (simpleRequest == null) {
             System.out.println("FEHLERHAFTE EINGABE\n");
         }
         if (simpleRequest.getValue() > 10000000) {
             System.out.println("ANGEFORDERTER BETRAG ZU GROSS\n");
         }
+
         return CALCULATOR.withdrawSimpleRequest(simpleRequest);
     }
 
