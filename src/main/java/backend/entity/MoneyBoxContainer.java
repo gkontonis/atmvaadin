@@ -104,7 +104,8 @@ public class MoneyBoxContainer {
         for (Currency currency : moneyBoxContainer.getMap().keySet()) {
             for (MoneyBox mb : moneyBoxContainer.get(currency)) {
                 if (withdraw(mb) == null) {
-                    return null;
+                    //return null;
+                    throw new IllegalArgumentException("MBContainer musst not be null!");
                 }
             }
         }

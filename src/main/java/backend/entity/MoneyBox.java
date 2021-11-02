@@ -12,16 +12,15 @@ public class MoneyBox {
 
     public MoneyBox(int value, Currency currency, CurrencyType type) {
         validateValue(value);
-        this.value = value;
-
         if (currency == null) {
             throw new IllegalArgumentException("Currency must not be null!");
         }
-        this.currency = currency;
-
         if (type == null) {
             throw new IllegalArgumentException("Type must not be null!");
         }
+
+        this.currency = currency;
+        this.value = value;
         this.type = type;
     }
 
