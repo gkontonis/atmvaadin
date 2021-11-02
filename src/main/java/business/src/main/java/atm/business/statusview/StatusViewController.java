@@ -1,4 +1,4 @@
-package business.src.main.java.atm.business.statusView;
+package business.src.main.java.atm.business.statusview;
 
 import backend.calculator.Calculator;
 import backend.enums.Currency;
@@ -11,7 +11,7 @@ public class StatusViewController {
 
     private Calculator CALCULATOR = new Calculator();
 
-    public String getStatus() {
+    /*public String getStatus() {
         String output = "";
 
         CurrencyType currencyType;
@@ -39,11 +39,23 @@ public class StatusViewController {
                 total += currentMoneyBox.getValue() * currentMoneyBox.getAmount();
             }
             output += ": " + totalOfType;
-            output += "\nGesamt: " + total + currency.name();
+            output += "\nGesamt: " + total + currency.name() + "   ";
 
             System.out.println(output);
             System.out.println();
         }
         return output;
+    }*/
+
+    public List<MoneyBox> getStatus() {
+        List<MoneyBox> resultList = null;
+        for (Currency currency : CALCULATOR.getContainer().getMap().keySet()) {
+            int totalOfType = 0;
+            int total = 0;
+            resultList = CALCULATOR.getContainer().get(currency);
+
+        }
+        return resultList;
     }
+
 }

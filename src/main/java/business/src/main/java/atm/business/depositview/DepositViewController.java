@@ -1,4 +1,4 @@
-package business.src.main.java.atm.business.depositView;
+package business.src.main.java.atm.business.depositview;
 
 import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
@@ -19,7 +19,7 @@ public class DepositViewController {
         }
         complexRequest = convertToComplexRequest(input);
         if (complexRequest == null) {
-            throw new IllegalStateException("Deposit Request must not be null!");
+            throw new IllegalStateException("Complex Request must not be null!");
         }
         CALCULATOR.depositComplexRequest(complexRequest);
     }
@@ -31,19 +31,19 @@ public class DepositViewController {
         }
         simpleRequest = convertToSimpleRequest(input);
         if (simpleRequest == null) {
-            throw new IllegalStateException("Deposit Request must not be null!");
+            throw new IllegalStateException("Complex Request must not be null!");
         }
         CALCULATOR.depositSimpleRequest(simpleRequest);
     }
 
     private ComplexRequest convertToComplexRequest(String input) {
-        ComplexRequest complexRequest = new ComplexRequest();
         if (input == null || input.isEmpty()) {
             return null;
         }
         if (input.contains(".") || input.contains(",")) {
             return null;
         }
+        ComplexRequest complexRequest = new ComplexRequest();
         String[] inputStrings = input.split(" ");
 
         for (String inputPart : inputStrings) {
@@ -60,18 +60,18 @@ public class DepositViewController {
         return complexRequest;
     }
 
-    //TODO Optimize
+    //TODO Optimize & exceptions
     private MoneyBox convertToSingleBox(char[] source) {
-        int value = 0;
-        Character currencyChar = null;
-        int amount = 0;
-
         if (!isNumber(source[0])) {
             return null;
         }
         if (toNumber(source[0]) == 0) {
             return null;
         }
+
+        int value = 0;
+        Character currencyChar = null;
+        int amount = 0;
 
         for (int i = 0; i < source.length; i++) {
             char currentSign = source[i];
