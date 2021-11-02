@@ -76,18 +76,22 @@ public class Calculator {
         return result;
     }
 
+
+    //TODO exceptions
     public MoneyBoxContainer withdrawSimpleRequest(SimpleRequest simpleRequest) {
         if (simpleRequest == null) {
-            return null;
+            //return null;
+            throw new IllegalArgumentException("SimpleRequest must not be null!");
         }
         if (calculatePossibleWithdrawal(simpleRequest) == null) {
-            return null;
+            //return null;
+            throw new IllegalArgumentException("MoneyBoxContainer for Simplerequest must not be null!");
         }
         MoneyBoxContainer result = initialContainer.withdraw(calculatePossibleWithdrawal(simpleRequest));
         return result;
     }
 
-    public MoneyBoxContainer calculatePossibleWithdrawal(SimpleRequest simpleRequest) {     //TODO: Should really be private
+    MoneyBoxContainer calculatePossibleWithdrawal(SimpleRequest simpleRequest) { //Is now package private
         if (simpleRequest == null) {
             throw new IllegalArgumentException("Payout Request must not be null!");
         }
@@ -112,10 +116,13 @@ public class Calculator {
                 valueLeft = valueLeft % box.getValue();
             }
         }
+        //TODO ATM Exception "zu wenig geld am konto bsp"
         if (valueLeft > 0) {
-            System.out.println("BETRAG NICHT VORRÄTIG");
-            return null;
+            System.out.println("BETRAG NICHT VORRÄTIG - CALC");
+            //return null;
+            throw new IllegalArgumentException("Value left > 0");
         }
+
         return resultMoneyBoxContainer;
     }
 
