@@ -1,6 +1,6 @@
 package frontend.src.main.java.atm.frontend.views;
 
-import business.src.main.java.atm.business.depositView.DepositViewController;
+import business.src.main.java.atm.business.depositview.DepositViewController;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

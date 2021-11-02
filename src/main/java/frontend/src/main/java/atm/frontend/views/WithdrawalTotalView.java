@@ -1,7 +1,7 @@
 package frontend.src.main.java.atm.frontend.views;
 
-import business.src.main.java.atm.business.statusView.StatusViewController;
-import business.src.main.java.atm.business.withdrawalView.WithdrawalViewController;
+import business.src.main.java.atm.business.statusview.StatusViewController;
+import business.src.main.java.atm.business.withdrawalview.WithdrawalViewController;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -29,7 +29,7 @@ public class WithdrawalTotalView extends VerticalLayout {
 
     private VerticalLayout withdrawalTotalView() {
         VerticalLayout withdrawalView = new VerticalLayout();
-        Text text = new Text(statusViewController.getStatus());
+        //TODO OO Text text = new Text(statusViewController.getStatus());
         TextField inputfield = new TextField();
         Button confirmWithdrawalButton = new Button("Abheben");
 
@@ -54,7 +54,8 @@ public class WithdrawalTotalView extends VerticalLayout {
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalMenuView.VIEW_ID));
 
-        withdrawalView.add(text, inputfield, confirmWithdrawalButton, backButton);
+        //withdrawalView.add(text, inputfield, confirmWithdrawalButton, backButton);
+        withdrawalView.add(inputfield, confirmWithdrawalButton, backButton);
 
         return withdrawalView;
     }
