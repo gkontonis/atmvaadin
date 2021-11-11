@@ -2,6 +2,7 @@ package backend.entity;
 
 import backend.enums.Currency;
 import backend.enums.CurrencyType;
+import com.vaadin.flow.component.icon.Icon;
 
 public class MoneyBox {
 
@@ -9,7 +10,6 @@ public class MoneyBox {
     private Currency currency;
     private CurrencyType type;
     private int amount = 0;
-
     public MoneyBox(int value, Currency currency, CurrencyType type) {
         validateValue(value);
         if (currency == null) {
@@ -30,6 +30,23 @@ public class MoneyBox {
         validateAmount(initialAmount);
 
         amount = initialAmount;
+    }
+
+    public MoneyBox(int value, Currency currency, CurrencyType type, Icon icon) {
+        validateValue(value);
+        if (currency == null) {
+            throw new IllegalArgumentException("Currency must not be null!");
+        }
+        if (type == null) {
+            throw new IllegalArgumentException("Type must not be null!");
+        }
+        if(icon == null){
+            throw new IllegalArgumentException("Icon must not be null!");
+        }
+
+        this.currency = currency;
+        this.value = value;
+        this.type = type;
     }
 
     public int deposit(int amount){
@@ -68,7 +85,6 @@ public class MoneyBox {
     }
 
     public int getAmount() { return amount; }
-
     public void setAmount(int amount){
         this.amount = amount;
     }

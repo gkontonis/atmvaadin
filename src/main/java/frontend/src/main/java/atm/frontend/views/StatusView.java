@@ -1,29 +1,41 @@
 package frontend.src.main.java.atm.frontend.views;
 
-import backend.calculator.Calculator;
-import backend.entity.MoneyBox;
-import backend.entity.MoneyBoxContainer;
-import backend.enums.Currency;
+import backend.entity.MoneyBoxItem;
+import backend.enums.CurrencyType;
 import business.src.main.java.atm.business.statusview.StatusViewController;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.html.Label;
 
+import javax.smartcardio.CommandAPDU;
+import java.util.Currency;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Route(value = StatusView.VIEW_ID)
 @PageTitle("Status")
 public class StatusView extends VerticalLayout {
+
     public static final String VIEW_ID = "statusview";
+    private static final Map<String, String> GRID_OVERVIEW_CAPTIONS = new HashMap<>();
     private StatusViewController controller = new StatusViewController();
-    private Calculator CALCULATOR = new Calculator();
-    private MoneyBoxContainer moneyBoxContainer = new MoneyBoxContainer(); //G
+
+    static {
+        GRID_OVERVIEW_CAPTIONS.put("value", "Wert");
+        GRID_OVERVIEW_CAPTIONS.put("currency", "Währung");
+        GRID_OVERVIEW_CAPTIONS.put("amount", "Bestand");
+        GRID_OVERVIEW_CAPTIONS.put("icon", "Icon");
+    }
 
     public StatusView() {
         addClassName("statusView");
@@ -35,15 +47,10 @@ public class StatusView extends VerticalLayout {
     private VerticalLayout statusMenuButtons() {
         VerticalLayout statusLayout = new VerticalLayout();
         statusLayout.addClassName("statusMenuButtons");
-
-        //TODO OO Text status = new Text(controller.getStatus());
-
         Button backButton = new Button("Zurück");
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(""));
 
-        //statusLayout.add(status, backButton);
         statusLayout.add(backButton);
-
         return statusLayout;
     }
 
@@ -53,34 +60,28 @@ public class StatusView extends VerticalLayout {
         return statusLable;
     }
 
-
     private Grid moneyGrid() {
-        List<MoneyBox> moneyBoxes = null;
-
-        for (Currency currency : CALCULATOR.getContainer().getMap().keySet()) {
-            moneyBoxes = CALCULATOR.getContainer().get(currency);
-        }
-
-        /*for(Currency c : moneyBoxContainer.getMap().keySet()){
-            moneyBoxes = moneyBoxContainer.get(c);
-        }*/
-
-        Grid<MoneyBox> grid = new Grid<>(MoneyBox.class);
-        grid.setItems(moneyBoxes);
+        List<MoneyBoxItem> moneyBoxes = controller.getMoneyBoxItems();
+        Grid<MoneyBoxItem> moneyGrid = new Grid<>(MoneyBoxItem.class);
 
 
-        grid.removeColumnByKey("value");
-        grid.removeColumnByKey("currency");
-        grid.removeColumnByKey("type");
-        grid.removeColumnByKey("amount");
+        moneyGrid.setItems(moneyBoxes);
+        moneyGrid.removeColumnByKey("type");
+        moneyGrid.addComponentColumn(i -> {
+            if(CurrencyType.COIN.equals(i.getType())) {
+                return VaadinIcon.PIGGY_BANK_COIN.create();
+            }
 
-        grid.addColumn(MoneyBox::getValue).setHeader("Wert");
-        grid.addColumn(MoneyBox::getCurrency).setHeader("Währung");
-        //grid.addColumn(MoneyBox::getType).setHeader("Typ");
-        grid.addColumn(MoneyBox::getAmount).setHeader("Anzahl");
+           return VaadinIcon.PIGGY_BANK.create();
+        }).setKey("type");
 
+        moneyGrid.addComponentColumn(MoneyBoxItem::getIcon).setHeader("The Icon").setKey("theIcon");
 
-        add(grid);
-        return grid;
+        GridCaptionHelper.setGridCaptions(moneyGrid.getColumns(), GRID_OVERVIEW_CAPTIONS);
+
+        add(moneyGrid);
+
+        return moneyGrid;
     }
+
 }
