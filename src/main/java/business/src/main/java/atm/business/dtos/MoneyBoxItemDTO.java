@@ -5,6 +5,10 @@ import backend.enums.Currency;
 import backend.enums.CurrencyType;
 import com.vaadin.flow.component.icon.Icon;
 
+/**
+ * @deprecated only for showcase
+ */
+@Deprecated
 public class MoneyBoxItemDTO implements MoneyBoxItem {
 
     private int value;
@@ -33,7 +37,6 @@ public class MoneyBoxItemDTO implements MoneyBoxItem {
         return CurrencyType.COIN;
     }
 
-    @Override
     public Icon getIcon() {
         return icon;
     }
