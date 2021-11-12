@@ -4,7 +4,7 @@ import backend.enums.Currency;
 import backend.enums.CurrencyType;
 import com.vaadin.flow.component.icon.Icon;
 
-public class MoneyBox {
+public class MoneyBox implements MoneyBoxItem {
 
     private int value;
     private Currency currency;
