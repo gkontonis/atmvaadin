@@ -14,7 +14,4 @@ public interface MoneyBoxItem {
     int getAmount();
 
     CurrencyType getType();
-
-    Icon getIcon();
-
 }
