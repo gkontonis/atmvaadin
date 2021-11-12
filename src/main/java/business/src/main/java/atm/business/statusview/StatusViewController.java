@@ -28,8 +28,9 @@ public class StatusViewController {
         List<MoneyBoxItem> resultContainers = new ArrayList<>();
 
         for (List<MoneyBox> moneyBoxList : moneyBoxLists) {
-            resultContainers.addAll(MoneyBoxItemTransformer.transform(moneyBoxList));
+            resultContainers.addAll(moneyBoxList);
         }
+
         return resultContainers;
     }
 
