@@ -34,7 +34,7 @@ public class StatusView extends VerticalLayout {
         GRID_OVERVIEW_CAPTIONS.put("value", "Wert");
         GRID_OVERVIEW_CAPTIONS.put("currency", "Währung");
         GRID_OVERVIEW_CAPTIONS.put("amount", "Bestand");
-        GRID_OVERVIEW_CAPTIONS.put("icon", "Icon");
+        GRID_OVERVIEW_CAPTIONS.put("type", "Geiler Typ");
     }
 
     public StatusView() {
@@ -72,10 +72,8 @@ public class StatusView extends VerticalLayout {
                 return VaadinIcon.PIGGY_BANK_COIN.create();
             }
 
-           return VaadinIcon.PIGGY_BANK.create();
+           return VaadinIcon.MONEY.create();
         }).setKey("type");
-
-        moneyGrid.addComponentColumn(MoneyBoxItem::getIcon).setHeader("The Icon").setKey("theIcon");
 
         GridCaptionHelper.setGridCaptions(moneyGrid.getColumns(), GRID_OVERVIEW_CAPTIONS);
 
