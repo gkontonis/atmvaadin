@@ -5,6 +5,7 @@ import business.src.main.java.atm.business.withdrawalview.WithdrawalViewControll
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -16,9 +17,7 @@ import frontend.src.main.java.atm.frontend.components.notifications.FancyNotific
 public class WithdrawalDenominatedView extends VerticalLayout {
     public static final String VIEW_ID = "withdrawaldenominatedview";
 
-
     private StatusViewController statusViewController = new StatusViewController();
-
 
     private WithdrawalViewController controller = new WithdrawalViewController();
     private FancyNotification fancyNotification = new FancyNotification();
@@ -32,14 +31,10 @@ public class WithdrawalDenominatedView extends VerticalLayout {
         //TODO OO Text text = new Text(statusViewController.getStatus());
 
         TextField inputfield = new TextField();
+        Label lable = new Label("Bitte die Beträge eingeben die Sie einzahlen wollen (Form: TypWährungAnzahl z.B. 10A15 5A33)");
         Button confirmWithdrawalButton = new Button("Abheben");
 
         confirmWithdrawalButton.addClickListener(buttonClickEvent -> {
-            //if (!isValid()) {
-            //    //ThrowError
-            //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
-            //    return;
-            //}
 
             try {
                 controller.withdrawDenominated(inputfield.getValue());
@@ -56,7 +51,7 @@ public class WithdrawalDenominatedView extends VerticalLayout {
         backButton.addClickListener(buttonClickEvent -> UI.getCurrent().navigate(WithdrawalMenuView.VIEW_ID));
 
        // withdrawalView.add(text, inputfield, confirmWithdrawalButton, backButton);
-        withdrawalView.add(inputfield, confirmWithdrawalButton, backButton);
+        withdrawalView.add(lable, inputfield, confirmWithdrawalButton, backButton);
 
         return withdrawalView;
     }
