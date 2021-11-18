@@ -34,6 +34,7 @@ public class WithdrawalViewController {
         }
         complexRequest = convertToComplexRequest(input);
         if (complexRequest == null) {
+            //TODO FIX FE OUTPUT "Cant withdraw ** amount" complexRequest.getMoneyBoxContainer().getMap().values(
             throw new IllegalStateException("Deposit Request must not be null!");
         }
         return CALCULATOR.withdraw(complexRequest);
