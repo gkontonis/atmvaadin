@@ -28,12 +28,6 @@ public class DepositTotalView extends VerticalLayout {
         Button confirmDepositButton = new Button("Einzahlen");
 
         confirmDepositButton.addClickListener(buttonClickEvent -> {
-            //if (!isValid()) {
-            //    //ThrowError
-            //    fancyNotification.showErrorNotification("Ungültige Eingabe.", 2000);
-            //    return;
-            //}
-
             try {
                 controller.depositTotal(inputfield.getValue());
             } catch (IllegalArgumentException e) {
@@ -50,8 +44,4 @@ public class DepositTotalView extends VerticalLayout {
         depositView.add(inputfield, confirmDepositButton, backButton);
         return depositView;
     }
-
-   /* private boolean isValid() {
-        return true;
-    }*/
 }

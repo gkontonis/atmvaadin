@@ -4,7 +4,6 @@ import backend.calculator.Calculator;
 import backend.entity.MoneyBox;
 import backend.entity.MoneyBoxItem;
 import backend.enums.Currency;
-import backend.transformer.MoneyBoxItemTransformer;
 
 import java.util.ArrayList;
 import java.util.Collection;
